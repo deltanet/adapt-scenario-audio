@@ -1,0 +1,94 @@
+	{
+		"_id": "c-05-2",
+		"_parentId": "b-05-2",
+        "_classes": "",
+        "_type":"component",
+        "_layout": "full",
+        "_component": "scenario-audio",
+        "title": "Scenario Audio",
+        "displayTitle": "Scenario Audio",
+        "body": "This is optional body text. Select the forward arrows to move through the scenario on a desktop, or swipe the images and select the plus icons to do so on mobile.",
+        "instruction": "Select the <instr>forward arrow</instr> on the image to find out more.",
+        "_hasNavigationInTextArea": false,
+        "mobileInstruction": "Select the <instr>plus icon</instr> and <instr>forward arrow</instr> to find out more.",
+        "_setCompletionOn":"allItems",
+        "displayTitleReduced": "Reduced title",
+        "bodyReduced": "Reduced text",
+        "_reducedText": {
+            "_isEnabled": true
+        },
+        "_audio": {
+            "_isEnabled": true,
+            "_showControls": true,
+            "_autoplay": true,
+            "_channel": 0,
+            "_location": "top-right",
+            "_media": {
+                "mp3": "course/en/audio/***.mp3",
+                "ogg": "course/en/audio/***.ogg"
+            }
+        },
+        "_items": [
+            {
+                "title": "Stage 1 title",
+                "titleReduced": "Reduced title",
+                "body": "This is display text 1. If viewing on desktop or tablet, this text will appear to the right of the image. On mobile, you’ll need to select the plus icon to reveal this text.",
+                "bodyReduced": "Reduced text",
+                "_graphic": {
+                    "src": "course/en/images/image-slider-1.jpg",
+                    "alt": "",
+                    "title": ""
+                },
+                "strapline": "",
+                "_audio": {
+                    "mp3": "course/en/audio/***.mp3",
+                    "ogg": "course/en/audio/***.ogg"
+                }
+            },
+            {
+                "title": "Stage 2 title",
+                "titleReduced": "Reduced title",
+                "body": "This is display text 2. If viewing on desktop or tablet, this text will appear to the right of the image. On mobile, you’ll need to select the plus icon to reveal this text.",
+                "bodyReduced": "Reduced text",
+                "_graphic": {
+                    "src": "course/en/images/image-slider-1.jpg",
+                    "alt": "",
+                    "title": ""
+                },
+                "strapline": "",
+                "_audio": {
+                    "mp3": "course/en/audio/***.mp3",
+                    "ogg": "course/en/audio/***.ogg"
+                }
+            },
+            {
+                "title": "Stage 3 title",
+                "titleReduced": "Reduced title",
+                "body": "This is display text 3. If viewing on desktop or tablet, this text will appear to the right of the image. On mobile, you’ll need to select the plus icon to reveal this text.",
+                "bodyReduced": "Reduced text",
+                "_graphic": {
+                    "src": "course/en/images/image-slider-2.jpg",
+                    "alt": "",
+                    "title": ""
+                },
+                "strapline": "",
+                "_audio": {
+                    "mp3": "course/en/audio/***.mp3",
+                    "ogg": "course/en/audio/***.ogg"
+                }
+            }
+        ],
+        "_pageLevelProgress": {
+            "_isEnabled": true
+        }
+    },
+
+
+
+// Add in course.json
+
+"_scenario-audio": {
+	"ariaRegion": "This component displays an image gallery with accompanying text, with the image displayed at full-width. Use the next and back navigation controls to work through the image gallery.",
+	"instruction": ""
+},
+

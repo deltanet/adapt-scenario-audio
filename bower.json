@@ -1,0 +1,19 @@
+{
+  "name": "adapt-scenario-audio",
+  "version": "2.0.2",
+  "framework": "2.0.4",
+  "homepage": "https://github.com/deltanet/adapt-scenario-audio",
+  "issues": "https://github.com/deltanet/adapt-scenario-audio/issues",
+  "displayName" : "Scenario",
+  "component" : "scenario",
+  "assetFields" : [
+    "_items[]._graphic.src"
+  ],
+  "description": "A component that displays an 100% image gallery with accompanying text. Usage: Scenarios.",
+  "main": "/js/adapt-scenario-audio.js",
+  "keywords": [
+    "adapt-plugin",
+    "adapt-component"
+  ],
+  "license": "GPL-3.0"
+}
