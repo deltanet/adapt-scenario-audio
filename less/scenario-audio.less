@@ -46,58 +46,13 @@
                 }
             }
         }
-
-        .scenario-audio-text-controls {
-            .scenario-audio-content-inner {
-                position: relative;
-                .scenario-audio-controls-container {
-                    position: absolute;
-                    width: 100%;
-                    left: 0px;
-                    top: 10px;
-                    display: block;
-                }
-                .scenario-audio-controls {
-                    margin-bottom: 0px;
-                    display: inline-block;
-                    &.scenario-audio-hidden {
-                        display:none;
-                    }
-                }
-                .scenario-audio-control-left {
-                    float:left;
-                }
-                .scenario-audio-control-right {
-                    float: right;
-                }
-                .scenario-audio-indicators {
-                    display: inline-block;
-                    width: auto;
-                    position: absolute;
-                    margin-top: 10px;
-                    top: 0px;
-                    left: 50%;
-                }
-                .scenario-audio-content-item {
-                    padding-top: 36px;
-                }
-            }
-
-            .scenario-audio-slide-container {
-                .scenario-audio-controls {
-                    display: none;
-                }
-                .scenario-audio-indicators {
-                    display: none;
-                }
-            }
-        }
     }
 
     .scenario-audio-content {
         width: 100%;
-        background-color: @item-color;
-        color: @item-text-color;
+        background-color: @primary-color;
+        color: @primary-color-inverted;
+        margin-top: -4px;
         float: right;
         .dir-rtl & {
             float: left;
@@ -146,6 +101,7 @@
         height: (@icon-size/2);
         display: inline-block;
         margin: 1px;
+        margin-top: @component-padding;
         border:inherit;
         border-radius: 50%;
         background-color: darken(@component-background-color, 10%);
@@ -161,7 +117,7 @@
         height: (@icon-size*2);
         position: absolute;
         top: 50%;
-        margin-top: -(@icon-size*2);
+        margin-top: -(@icon-size);
         z-index: 10;
         text-decoration: none;
         background-color: @item-color;

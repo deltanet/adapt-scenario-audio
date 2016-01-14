@@ -1,38 +1,6 @@
 <div class="scenario-audio-inner component-inner" role="region" aria-label="{{_globals._components._scenario-audio.ariaRegion}}">
     {{> component this}}
-    <div class="scenario-audio-widget component-widget {{#if _hasNavigationInTextArea}}scenario-audio-text-controls{{/if}}">
-
-        <div class="scenario-audio-content">
-            <div class="scenario-audio-content-inner">
-                {{#each _items}}
-                <div class="scenario-audio-content-item">
-                    <div class="scenario-audio-content-title">
-                        <div class="scenario-audio-content-title-inner accessible-text-block h5" role="heading" aria-level="5" tabindex="0">
-                            {{{title}}} 
-                        </div>
-                    </div>
-                    <div class="scenario-audio-content-body">
-                        <div class="scenario-audio-content-body-inner">
-                            {{{a11y_text body}}}
-                        </div> 
-                    </div>
-                </div>
-                {{/each}}
-                <div class="scenario-audio-controls-container clearfix">
-                    <div class="scenario-audio-indicators">
-                        {{#each _items}}
-                        <div class="scenario-audio-progress component-item-color component-item-border"></div>
-                        {{/each}}
-                    </div>
-                    <button class="base scenario-audio-controls scenario-audio-control-left" role="button" aria-label="{{_globals._accessibility._ariaLabels.previous}}">
-                        <div class="icon icon-controls-left"></div>
-                    </button>
-                    <button class="base scenario-audio-controls scenario-audio-control-right" role="button" aria-label="{{_globals._accessibility._ariaLabels.next}}">
-                        <div class="icon icon-controls-right"></div>
-                    </button>
-                </div>
-            </div>
-        </div>
+    <div class="scenario-audio-widget component-widget">
 
         <div class="scenario-audio-strapline">
             <div class="scenario-audio-strapline-header">
@@ -52,7 +20,6 @@
         </div>
 
         <div class="scenario-audio-slide-container">
-
             <button class="base scenario-audio-controls scenario-audio-control-left" role="button" aria-label="{{_globals._accessibility._ariaLabels.previous}}">
                 <div class="icon icon-controls-left"></div>
             </button>
@@ -63,15 +30,35 @@
             <div class="scenario-audio-slider clearfix">
                 {{#each _items}}
                 <div class="scenario-audio-slider-graphic {{#if visited}}visited{{/if}}">
-                    <img src="{{_graphic.src}}" aria-label="{{_graphic.alt}}" tabindex="0"/>
+                    <img src="{{_graphic.src}}" alt="{{_graphic.alt}}"/>
                 </div>
                 {{/each}}
             </div>
-            <div class="scenario-audio-indicators">
+        </div>
+
+        <div class="scenario-audio-content">
+            <div class="scenario-audio-content-inner">
                 {{#each _items}}
-                <div class="scenario-audio-progress component-item-color component-item-border"></div>
+                <div class="scenario-audio-content-item" aria-label="{{_graphic.alt}}">
+                    <div class="scenario-audio-content-title">
+                        <div class="scenario-audio-content-title-inner accessible-text-block h5" role="heading" aria-level="5" tabindex="0">
+                            {{{title}}} 
+                        </div>
+                    </div>
+                    <div class="scenario-audio-content-body">
+                        <div class="scenario-audio-content-body-inner">
+                            {{{a11y_text body}}}
+                        </div> 
+                    </div>
+                </div>
                 {{/each}}
             </div>
+        </div>
+
+        <div class="scenario-audio-indicators">
+            {{#each _items}}
+            <div class="scenario-audio-progress component-item-color component-item-border"></div>
+            {{/each}}
         </div>
 
         <div class="clearfix"></div>

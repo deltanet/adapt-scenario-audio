@@ -74,7 +74,7 @@ define(function(require) {
             }
             this.calculateWidths();
 
-            if (Adapt.device.screenSize !== 'large' && !this.model.get('_wasHotgraphic')) {
+            if (Adapt.device.screenSize !== 'large') {
                 this.replaceInstructions();
             }
             this.setupEventListeners();
@@ -127,11 +127,7 @@ define(function(require) {
         },
 
         reRender: function() {
-            if (this.model.get('_wasHotgraphic') && Adapt.device.screenSize == 'large') {
-                this.replaceWithHotgraphic();
-            } else {
-                this.resizeControl();
-            }
+            this.resizeControl();
         },
 
         closeNotify: function() {
@@ -141,32 +137,9 @@ define(function(require) {
         replaceInstructions: function() {
             if (Adapt.device.screenSize === 'large') {
                 this.$('.scenario-audio-instruction-inner').html(this.model.get('instruction')).a11y_text();
-            } else if (this.model.get('mobileInstruction') && !this.model.get('_wasHotgraphic')) {
+            } else if (this.model.get('mobileInstruction')) {
                 this.$('.scenario-audio-instruction-inner').html(this.model.get('mobileInstruction')).a11y_text();
             }
-        },
-
-        replaceWithHotgraphic: function() {
-            if (!Adapt.componentStore.hotgraphic) throw "Hotgraphic not included in build";
-            var Hotgraphic = Adapt.componentStore.hotgraphic;
-            
-            var model = this.prepareHotgraphicModel();
-            var newHotgraphic = new Hotgraphic({ model: model });
-            var $container = $(".component-container", $("." + this.model.get("_parentId")));
-
-            $container.append(newHotgraphic.$el);
-            this.remove();
-            _.defer(function() {
-                Adapt.trigger('device:resize');
-            });
-        },
-
-        prepareHotgraphicModel: function() {
-            var model = this.model;
-            model.set('_component', 'hotgraphic');
-            model.set('body', model.get('originalBody'));
-            model.set('instruction', model.get('originalInstruction'));
-            return model;
         },
 
         moveSliderToIndex: function(itemIndex, animate, callback) {
