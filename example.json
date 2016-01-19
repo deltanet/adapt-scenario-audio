@@ -1,6 +1,6 @@
-	{
-		"_id": "c-05-2",
-		"_parentId": "b-05-2",
+    {
+        "_id": "c-05-2",
+        "_parentId": "b-05-2",
         "_classes": "",
         "_type":"component",
         "_layout": "full",
@@ -23,8 +23,8 @@
             "_channel": 0,
             "_location": "top-right",
             "_media": {
-                "mp3": "course/en/audio/***.mp3",
-                "ogg": "course/en/audio/***.ogg"
+                "desktop": "course/en/audio/***.mp3",
+                "mobile": "course/en/audio/***.mp3"
             }
         },
         "_items": [
@@ -40,8 +40,7 @@
                 },
                 "strapline": "",
                 "_audio": {
-                    "mp3": "course/en/audio/***.mp3",
-                    "ogg": "course/en/audio/***.ogg"
+                    "src": "course/en/audio/***.mp3"
                 }
             },
             {
@@ -56,8 +55,7 @@
                 },
                 "strapline": "",
                 "_audio": {
-                    "mp3": "course/en/audio/***.mp3",
-                    "ogg": "course/en/audio/***.ogg"
+                    "src": "course/en/audio/***.mp3"
                 }
             },
             {
@@ -72,8 +70,7 @@
                 },
                 "strapline": "",
                 "_audio": {
-                    "mp3": "course/en/audio/***.mp3",
-                    "ogg": "course/en/audio/***.ogg"
+                    "src": "course/en/audio/***.mp3"
                 }
             }
         ],
@@ -84,7 +81,7 @@
 
 // Add in course.json
 "_scenario-audio": {
-	"ariaRegion": "This component displays an image gallery with accompanying text. Use the next and back navigation controls to work through the image gallery.",
-	"instruction": ""
+    "ariaRegion": "This component displays an image gallery with accompanying text. Use the next and back navigation controls to work through the image gallery.",
+    "instruction": ""
 },
 
