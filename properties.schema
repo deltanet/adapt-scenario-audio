@@ -37,6 +37,22 @@
       "validators": [],
       "help": "This is the mobile only instruction text"
     },
+    "displayTitleReduced": {
+      "type": "string",
+      "required": false,
+      "default": "",
+      "title": "Reduced Text Display Title",
+      "inputType": "Text",
+      "validators": []
+    },
+    "bodyReduced": {
+      "type": "string",
+      "required": false,
+      "default": "",
+      "title": "Reduced Text Body",
+      "inputType": "TextArea",
+      "validators": []
+    },
     "_hasNavigationInTextArea": {
       "type":"boolean",
       "required":true,
@@ -73,11 +89,29 @@
             "validators": [],
             "help": ""
           },
+          "titleReduced": {
+            "type":"string",
+            "required": false,
+            "default": "",
+            "title": "Narrative display title - Reduced Text",
+            "inputType": "Text",
+            "validators": [],
+            "help": ""
+          },
           "body": {
             "type":"string",
             "required": false,
             "default": "",
             "title": "Narrative main text",
+            "inputType": "TextArea",
+            "validators": [],
+            "help": ""
+          },
+          "bodyReduced": {
+            "type":"string",
+            "required": false,
+            "default": "",
+            "title": "Narrative main text - Reduced Text",
             "inputType": "TextArea",
             "validators": [],
             "help": ""
@@ -103,6 +137,14 @@
                 "inputType": "Text",
                 "validators": [],
                 "help": "Alternative text for this items image"
+              },
+              "title": {
+                "type": "string",
+                "required": false,
+                "default": "",
+                "title": "Title",
+                "inputType": "Text",
+                "validators": []
               }
             }
           },
@@ -114,7 +156,38 @@
             "inputType": "Text",
             "validators": ["required"],
             "help": ""
+          },
+          "_audio": {
+            "type": "object",
+            "required": false,
+            "properties": {
+              "src": {
+                "type": "string",
+                "required": false,
+                "default": "",
+                "title": "Audio",
+                "inputType": "Asset:audio",
+                "validators": [],
+                "help": "Optional audio this item"
+              }
+            }
           }
+        }
+      }
+    },
+    "_reducedText": {
+      "type":"object",
+      "required":false,
+      "title": "Reduced Text Options",
+      "help": "The Audio extension must be installed for reduced text options to work",
+      "properties":{
+        "_isEnabled": {
+          "type":"boolean",
+          "required":false,
+          "default": true,
+          "title": "Reduced Text Enabled",
+          "inputType": { "type": "Boolean", "options": [false, true]},
+          "validators": []
         }
       }
     }

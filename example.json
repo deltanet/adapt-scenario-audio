@@ -16,17 +16,6 @@
         "_reducedText": {
             "_isEnabled": true
         },
-        "_audio": {
-            "_isEnabled": true,
-            "_showControls": true,
-            "_autoplay": true,
-            "_channel": 0,
-            "_location": "top-right",
-            "_media": {
-                "desktop": "course/en/audio/***.mp3",
-                "mobile": "course/en/audio/***.mp3"
-            }
-        },
         "_items": [
             {
                 "title": "Stage 1 title",
