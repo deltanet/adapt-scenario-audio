@@ -7,7 +7,8 @@
   "displayName" : "Scenario",
   "component" : "scenario-audio",
   "assetFields" : [
-    "_items[]._graphic.src"
+    "_items[]._graphic.src",
+    "_items[]._audio.src"
   ],
   "description": "A component that displays a 100% image gallery with accompanying text. Usage: Scenarios.",
   "main": "/js/adapt-scenario-audio.js",
