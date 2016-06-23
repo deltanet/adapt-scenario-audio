@@ -78,19 +78,19 @@ define(function(require) {
                 this.replaceInstructions();
             }
             this.setupEventListeners();
-            
-            // if hasNavigationInTextArea set margin left 
+
+            // if hasNavigationInTextArea set margin left
             var hasNavigationInTextArea = this.model.get('_hasNavigationInTextArea');
             if (hasNavigationInTextArea == true) {
                 var indicatorWidth = this.$('.scenario-audio-indicators').width();
                 var marginLeft = indicatorWidth / 2;
-                
+
                 this.$('.scenario-audio-indicators').css({
                     marginLeft: '-' + marginLeft + 'px'
                 });
             }
 
-            if (Adapt.config.get('_audio') && Adapt.config.get('_audio')._isReducedTextEnabled && this.model.get('_reducedText') && this.model.get('_reducedText')._isEnabled) {
+            if (this.model.get('_audio') && this.model.get('_audio')._reducedTextisEnabled) {
                 this.replaceText(Adapt.audio.textSize);
             }
         },
@@ -256,7 +256,7 @@ define(function(require) {
         evaluateCompletion: function() {
             if (this.getVisitedItems().length === this.model.get('_items').length) {
                 this.trigger('allItems');
-            } 
+            }
         },
 
         moveElement: function($element, deltaX) {
@@ -276,7 +276,7 @@ define(function(require) {
             var popupObject_body = currentItem.body;
 
             // If reduced text is enabled and selected
-            if (Adapt.config.get('_audio') && Adapt.config.get('_audio')._isReducedTextEnabled && this.model.get('_reducedText') && this.model.get('_reducedText')._isEnabled && Adapt.audio.textSize == 1) {
+            if (this.model.get('_audio') && this.model.get('_audio')._reducedTextisEnabled && Adapt.audio.textSize == 1) {
                 popupObject_title = currentItem.titleReduced;
                 popupObject_body = currentItem.bodyReduced;
             }
@@ -292,7 +292,7 @@ define(function(require) {
             Adapt.trigger('notify:popup', popupObject);
 
             ///// Audio /////
-            if (Adapt.config.get('_audio') && Adapt.config.get('_audio')._isEnabled && this.model.has('_audio') && this.model.get('_audio')._isEnabled && Adapt.audio.audioClip[this.model.get('_audio')._channel].status==1) {
+            if (this.model.has('_audio') && this.model.get('_audio')._isEnabled && Adapt.audio.audioClip[this.model.get('_audio')._channel].status==1) {
                 // Trigger audio
                 Adapt.trigger('audio:playAudio', currentItem._audio.src, this.model.get('_id'), this.model.get('_audio')._channel);
             }
@@ -319,14 +319,14 @@ define(function(require) {
             if (Adapt.device.screenSize === 'large') {
                 var currentItem = this.getCurrentItem(stage);
 
-                if (Adapt.config.get('_audio') && Adapt.config.get('_audio')._isEnabled && this.model.has('_audio') && this.model.get('_audio')._isEnabled && Adapt.audio.audioClip[this.model.get('_audio')._channel].status==1) {
+                if (this.model.has('_audio') && this.model.get('_audio')._isEnabled && Adapt.audio.audioClip[this.model.get('_audio')._channel].status==1) {
                     // Trigger audio
                     Adapt.trigger('audio:playAudio', currentItem._audio.src, this.model.get('_id'), this.model.get('_audio')._channel);
                 }
             }
             ///// End of Audio /////
         },
-        
+
         onProgressClicked: function(event) {
             event.preventDefault();
             var clickedIndex = $(event.target).index();
@@ -370,7 +370,7 @@ define(function(require) {
         // Reduced text
         replaceText: function(value) {
             // If enabled
-            if (Adapt.config.get('_audio') && Adapt.config.get('_audio')._isReducedTextEnabled && this.model.get('_reducedText') && this.model.get('_reducedText')._isEnabled) {
+            if (this.model.get('_audio') && this.model.get('_audio')._reducedTextisEnabled) {
                 // Change component title and body
                 if(value == 0) {
                     this.$('.component-title-inner').html(this.model.get('displayTitle')).a11y_text();
