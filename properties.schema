@@ -73,11 +73,29 @@
             "validators": [],
             "help": ""
           },
+          "titleReduced": {
+            "type":"string",
+            "required": false,
+            "default": "",
+            "title": "Narrative display title - Reduced Text",
+            "inputType": "Text",
+            "validators": [],
+            "help": ""
+          },
           "body": {
             "type":"string",
             "required": false,
             "default": "",
             "title": "Narrative main text",
+            "inputType": "TextArea",
+            "validators": [],
+            "help": ""
+          },
+          "bodyReduced": {
+            "type":"string",
+            "required": false,
+            "default": "",
+            "title": "Narrative main text - Reduced Text",
             "inputType": "TextArea",
             "validators": [],
             "help": ""
@@ -103,6 +121,14 @@
                 "inputType": "Text",
                 "validators": [],
                 "help": "Alternative text for this items image"
+              },
+              "title": {
+                "type": "string",
+                "required": false,
+                "default": "",
+                "title": "Title",
+                "inputType": "Text",
+                "validators": []
               }
             }
           },
@@ -114,6 +140,21 @@
             "inputType": "Text",
             "validators": ["required"],
             "help": ""
+          },
+          "_audio": {
+            "type": "object",
+            "required": false,
+            "properties": {
+              "src": {
+                "type": "string",
+                "required": false,
+                "default": "",
+                "title": "Audio",
+                "inputType": "Asset:audio",
+                "validators": [],
+                "help": "Optional audio this item"
+              }
+            }
           }
         }
       }
