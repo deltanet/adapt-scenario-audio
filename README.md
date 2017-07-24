@@ -4,7 +4,7 @@
 
 **Scenario** displays items (or slides) that present an image and text side-by-side. Left and right navigation controls allow the learner to progress horizontally through the items. Optional text may precede it. Useful for detailing a sequential process. On mobile devices, the scenario text is collapsed above the image.
 
-##Installation
+## Installation
 
 Scenario must be nmanually installed.
 
