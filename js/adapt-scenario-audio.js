@@ -379,10 +379,10 @@ define(function(require) {
                 for (var i = 0; i < this.model.get('_items').length; i++) {
                     if(value == 0) {
                         this.$('.scenario-audio-content-title-inner').eq(i).html(this.model.get('_items')[i].title);
-                        this.$('.scenario-audio-content-body-inner').eq(i).html(this.model.get('_items')[i].body);
+                        this.$('.scenario-audio-content-body-inner').eq(i).html(this.model.get('_items')[i].body.a11y_text());
                     } else {
                         this.$('.scenario-audio-content-title-inner').eq(i).html(this.model.get('_items')[i].titleReduced);
-                        this.$('.scenario-audio-content-body-inner').eq(i).html(this.model.get('_items')[i].bodyReduced);
+                        this.$('.scenario-audio-content-body-inner').eq(i).html(this.model.get('_items')[i].bodyReduced.a11y_text());
                     }
                 }
             }
