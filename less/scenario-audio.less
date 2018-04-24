@@ -1,5 +1,9 @@
 .scenario-audio-component {
 
+  .scenario-audio-widget {
+      background-color: @background-color;
+  }
+
     &.desktop {
         .scenario-audio-slide-container {
             width: 100%;
@@ -107,8 +111,7 @@
         height: (@icon-size/2);
         display: inline-block;
         margin: 1px;
-        margin-top: @component-padding;
-        border:inherit;
+        border: inherit;
         border-radius: 50%;
         background-color: darken(@component-background-color, 10%);
         cursor: pointer;
@@ -186,6 +189,7 @@
             position: absolute;
             top: 10px;
             right: 10px;
+            color: @button-text-color-hover;
             .dir-rtl & {
                 right: inherit;
                 left: 0;
