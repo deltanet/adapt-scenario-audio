@@ -7,15 +7,22 @@
               <div class="scenario-audio-content-item">
                 {{#if _graphic.alt}}{{{a11y_aria_label _graphic.alt}}}{{/if}}
                   <div class="scenario-audio-content-title">
-                      <div class="scenario-audio-content-title-inner h5" role="heading" aria-level="5" tabindex="0">
-                          {{{title}}}
-                      </div>
+                    <div class="scenario-audio-content-title-inner h5" role="heading" aria-level="5" tabindex="0">
+                      {{{title}}}
+                    </div>
                   </div>
                   <div class="scenario-audio-content-body">
-                      <div class="scenario-audio-content-body-inner">
-                          {{{a11y_text body}}}
-                      </div>
+                    <div class="scenario-audio-content-body-inner">
+                      {{{a11y_text body}}}
+                    </div>
                   </div>
+                  {{#if instruction}}
+                  <div class="scenario-audio-content-instruction">
+                    <div class="scenario-audio-content-instruction-inner">
+                      {{{a11y_text instruction}}}
+                    </div>
+                  </div>
+                  {{/if}}
               </div>
               {{/each}}
           </div>

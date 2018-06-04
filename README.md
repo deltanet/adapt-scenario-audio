@@ -30,13 +30,15 @@ The attributes listed below are used in *components.json* to configure **Scenari
 
 **_items** (array): Multiple items may be created. Each item represents one slide and contains values for the scenario (**title**, **body**), the image (**_graphic**), and the slide's header when viewed on a mobile device (**_strapLine**).
 
->**title** (string): This value is the title for this scenario element.
+>**title** (string): This value is the title for this scenario element.  
 
->**body** (string): This is the main text for this scenario element.
+>**body** (string): This is the main text for this scenario element.  
+
+>**instruction** (string): This optional text appears below the item body. It is frequently used to guide the learner’s interaction with the component.   
 
 >**_graphic** (object): The image that appears next to the scenario text. It contains values for **src** and **alt**.
 
->>**src** (string): File name (including path) of the image. Path should be relative to the *src* folder (e.g.,*course/en/images/origami-menu-two.jpg*).  
+>>**src** (string): File name (including path) of the image. Path should be relative to the *src* folder.  
 
 >>**alt** (string): This text becomes the image’s `alt` attribute.  
 
@@ -51,7 +53,7 @@ The attributes listed below are used in *components.json* to configure **Scenari
 On mobile devices, the scenario text is collapsed above the image. It is accessed by clicking an icon (+) next the to strapline.
 
 ----------------------------
-**Version number:**  2.0.8   
+**Version number:**  2.1.0   
 **Framework versions:** 2.0  
 **Author / maintainer:** Deltanet  
 **Accessibility support:** WAI AA   

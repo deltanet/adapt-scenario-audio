@@ -17,6 +17,7 @@
                 "titleReduced": "Reduced title",
                 "body": "This is display text 1. If viewing on desktop or tablet, this text will appear to the right of the image. On mobile, you’ll need to select the plus icon to reveal this text.",
                 "bodyReduced": "Reduced text",
+                "instruction": "",
                 "_graphic": {
                     "src": "course/en/images/image-slider-1.jpg",
                     "alt": "",
@@ -32,6 +33,7 @@
                 "titleReduced": "Reduced title",
                 "body": "This is display text 2. If viewing on desktop or tablet, this text will appear to the right of the image. On mobile, you’ll need to select the plus icon to reveal this text.",
                 "bodyReduced": "Reduced text",
+                "instruction": "",
                 "_graphic": {
                     "src": "course/en/images/image-slider-1.jpg",
                     "alt": "",
@@ -47,6 +49,7 @@
                 "titleReduced": "Reduced title",
                 "body": "This is display text 3. If viewing on desktop or tablet, this text will appear to the right of the image. On mobile, you’ll need to select the plus icon to reveal this text.",
                 "bodyReduced": "Reduced text",
+                "instruction": "",
                 "_graphic": {
                     "src": "course/en/images/image-slider-2.jpg",
                     "alt": "",
@@ -57,10 +60,7 @@
                     "src": "course/en/audio/***.mp3"
                 }
             }
-        ],
-        "_pageLevelProgress": {
-            "_isEnabled": true
-        }
+        ]
     },
 
 // Add in course.json
