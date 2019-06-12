@@ -1,7 +1,13 @@
 .scenario-audio-component {
 
+  .component-instruction {
+      background-color: @primary-color;
+      color: @primary-color-inverted;
+  }
+
   .scenario-audio-widget {
       background-color: @background-color;
+      margin-top: 0px;
   }
 
     &.desktop {
@@ -69,7 +75,7 @@
     }
 
     .scenario-audio-content-inner {
-        padding:20px;
+        padding: @component-padding;
     }
 
     &.mobile {
@@ -103,6 +109,10 @@
         .dir-rtl & {
             float: right;
         }
+
+        img {
+          display: block;
+        }
     }
 
     .scenario-audio-item-title {
@@ -112,6 +122,11 @@
 
     .scenario-audio-indicators {
         text-align: center;
+
+        background-color: @text-background-color;
+        .no-opacity & {
+            background-color: @text-background-color-fallback;
+        }
     }
 
     .scenario-audio-progress {
@@ -119,12 +134,15 @@
         height: (@icon-size/2);
         display: inline-block;
         margin: 1px;
+        margin-top: 10px;
         border: inherit;
         border-radius: 50%;
-        background-color: darken(@component-background-color, 10%);
         cursor: pointer;
+
+        background-color: @item-color;
+
         &.selected {
-            background-color: @item-color;
+          background-color: @item-color-selected;
         }
     }
 
