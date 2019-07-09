@@ -28,6 +28,8 @@ The attributes listed below are used in *components.json* to configure **Scenari
 
 **_setCompletionOn** (string): This value determines when the component registers as complete. Acceptable values are `"allItems"` and `"inview"`. `"allItems"` requires the learner to navigate to each slide. `"inview"` requires the **Scenario** component to enter the view port completely, top and bottom.
 
+**_textBelowImage** (boolean): If set to 'true', the item text will be displayed below the graphic. Otherwise the text will be dsiplayed below the component body and instruction text.
+
 **_items** (array): Multiple items may be created. Each item represents one slide and contains values for the scenario (**title**, **body**), the image (**_graphic**), and the slide's header when viewed on a mobile device (**_strapLine**).
 
 >**title** (string): This value is the title for this scenario element.  
@@ -53,8 +55,8 @@ The attributes listed below are used in *components.json* to configure **Scenari
 On mobile devices, the scenario text is collapsed above the image. It is accessed by clicking an icon (+) next the to strapline.
 
 ----------------------------
-**Version number:**  2.2.1   
-**Framework versions:** 2.0  
+**Version number:**  2.3.0   
+**Framework versions:** 2+  
 **Author / maintainer:** Deltanet  
 **Accessibility support:** WAI AA   
 **RTL support:** yes  

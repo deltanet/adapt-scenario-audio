@@ -1,68 +1,98 @@
 <div class="scenario-audio-inner component-inner" role="region" aria-label="{{_globals._components._scenario-audio.ariaRegion}}">
-    {{> component this}}
-    <div class="scenario-audio-widget component-widget">
-      <div class="scenario-audio-content">
-          <div class="scenario-audio-content-inner">
-              {{#each _items}}
-              <div class="scenario-audio-content-item">
-                {{#if _graphic.alt}}{{{a11y_aria_label _graphic.alt}}}{{/if}}
-                  <div class="scenario-audio-content-title">
-                    <div class="scenario-audio-content-title-inner h5" role="heading" aria-level="5" tabindex="0">
-                      {{{compile title}}}
-                    </div>
-                  </div>
-                  <div class="scenario-audio-content-body">
-                    <div class="scenario-audio-content-body-inner">
-                      {{{compile_a11y_text body}}}
-                    </div>
-                  </div>
-                  {{#if instruction}}
-                  <div class="scenario-audio-content-instruction">
-                    <div class="scenario-audio-content-instruction-inner">
-                      {{{compile_a11y_text instruction}}}
-                    </div>
-                  </div>
-                  {{/if}}
-              </div>
-              {{/each}}
+  {{> component this}}
+  <div class="scenario-audio-widget component-widget">
+    {{#unless _textBelowImage}}
+    <div class="scenario-audio-content">
+      <div class="scenario-audio-content-inner">
+        {{#each _items}}
+        <div class="scenario-audio-content-item">
+          {{#if _graphic.alt}}{{{a11y_aria_label _graphic.alt}}}{{/if}}
+          <div class="scenario-audio-content-title">
+            <div class="scenario-audio-content-title-inner h5" role="heading" aria-level="5" tabindex="0">
+              {{{compile title}}}
+            </div>
           </div>
+          <div class="scenario-audio-content-body">
+            <div class="scenario-audio-content-body-inner">
+              {{{compile_a11y_text body}}}
+            </div>
+          </div>
+          {{#if instruction}}
+          <div class="scenario-audio-content-instruction">
+            <div class="scenario-audio-content-instruction-inner">
+              {{{compile_a11y_text instruction}}}
+            </div>
+          </div>
+          {{/if}}
+        </div>
+        {{/each}}
       </div>
-        <div class="scenario-audio-strapline">
-            <div class="scenario-audio-strapline-header">
-                <div class="scenario-audio-strapline-header-inner clearfix">
-                    <div></div>
-                    {{#each _items}}
-                    <button role="button" class="base scenario-audio-strapline-title" aria-label="{{{strapline}}}">
-                        <div class="scenario-audio-strapline-title-inner accessible-text-block h5">
-                            {{{strapline}}}
-                        </div>
-                        <div class="icon icon-plus"></div>
-                        <div class="focus-rect"></div>
-                    </button>
-                    {{/each}}
-                </div>
-            </div>
-        </div>
-        <div class="scenario-audio-slide-container">
-            <button class="base scenario-audio-controls scenario-audio-control-left" role="button" aria-label="{{_globals._accessibility._ariaLabels.previous}}">
-                <div class="icon icon-controls-left"></div>
-            </button>
-            <button class="base scenario-audio-controls scenario-audio-control-right" role="button" aria-label="{{_globals._accessibility._ariaLabels.next}}">
-                <div class="icon icon-controls-right"></div>
-            </button>
-            <div class="scenario-audio-slider clearfix">
-                {{#each _items}}
-                <div class="scenario-audio-slider-graphic {{#if visited}}visited{{/if}}">
-                    <img src="{{_graphic.src}}"/>
-                </div>
-                {{/each}}
-            </div>
-            <div class="scenario-audio-indicators">
-                {{#each _items}}
-                <div class="scenario-audio-progress component-item-color component-item-border"></div>
-                {{/each}}
-            </div>
-        </div>
-        <div class="clearfix"></div>
     </div>
+    {{/unless}}
+    <div class="scenario-audio-strapline">
+      <div class="scenario-audio-strapline-header">
+        <div class="scenario-audio-strapline-header-inner clearfix">
+          <div></div>
+          {{#each _items}}
+          <button role="button" class="base scenario-audio-strapline-title" aria-label="{{{strapline}}}">
+            <div class="scenario-audio-strapline-title-inner accessible-text-block h5">
+              {{{strapline}}}
+            </div>
+            <div class="icon icon-plus"></div>
+            <div class="focus-rect"></div>
+          </button>
+          {{/each}}
+        </div>
+      </div>
+    </div>
+    <div class="scenario-audio-slide-container">
+      <button class="base scenario-audio-controls scenario-audio-control-left" role="button" aria-label="{{_globals._accessibility._ariaLabels.previous}}">
+        <div class="icon icon-controls-left"></div>
+      </button>
+      <button class="base scenario-audio-controls scenario-audio-control-right" role="button" aria-label="{{_globals._accessibility._ariaLabels.next}}">
+        <div class="icon icon-controls-right"></div>
+      </button>
+      <div class="scenario-audio-slider clearfix">
+        {{#each _items}}
+        <div class="scenario-audio-slider-graphic {{#if visited}}visited{{/if}}">
+          <img src="{{_graphic.src}}"/>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+    <div class="scenario-audio-indicators">
+      {{#each _items}}
+      <div class="scenario-audio-progress component-item-color component-item-border"></div>
+      {{/each}}
+    </div>
+    {{#if _textBelowImage}}
+    <div class="scenario-audio-content">
+      <div class="scenario-audio-content-inner">
+        {{#each _items}}
+        <div class="scenario-audio-content-item">
+          {{#if _graphic.alt}}{{{a11y_aria_label _graphic.alt}}}{{/if}}
+          <div class="scenario-audio-content-title">
+            <div class="scenario-audio-content-title-inner h5" role="heading" aria-level="5" tabindex="0">
+              {{{compile title}}}
+            </div>
+          </div>
+          <div class="scenario-audio-content-body">
+            <div class="scenario-audio-content-body-inner">
+              {{{compile_a11y_text body}}}
+            </div>
+          </div>
+          {{#if instruction}}
+          <div class="scenario-audio-content-instruction">
+            <div class="scenario-audio-content-instruction-inner">
+              {{{compile_a11y_text instruction}}}
+            </div>
+          </div>
+          {{/if}}
+        </div>
+        {{/each}}
+      </div>
+    </div>
+    {{/if}}
+    <div class="clearfix"></div>
+  </div>
 </div>

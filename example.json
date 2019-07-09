@@ -11,6 +11,7 @@
         "instruction": "Select the <instr>forward arrow</instr> on the image to find out more.",
         "mobileInstruction": "Select the <instr>plus icon</instr> and <instr>forward arrow</instr> to find out more.",
         "_setCompletionOn":"allItems",
+        "_textBelowImage": false,
         "_items": [
             {
                 "title": "Stage 1 title",
