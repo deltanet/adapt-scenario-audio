@@ -8,19 +8,19 @@
         <div class="scenario-audio-content-item">
           {{#if _graphic.alt}}{{{a11y_aria_label _graphic.alt}}}{{/if}}
           <div class="scenario-audio-content-title">
-            <div class="scenario-audio-content-title-inner h5" role="heading" aria-level="5" tabindex="0">
+            <div class="scenario-audio-content-title-inner h5" role="heading" aria-level="5">
               {{{compile title}}}
             </div>
           </div>
           <div class="scenario-audio-content-body">
             <div class="scenario-audio-content-body-inner">
-              {{{compile_a11y_text body}}}
+              {{{compile body}}}
             </div>
           </div>
           {{#if instruction}}
           <div class="scenario-audio-content-instruction">
             <div class="scenario-audio-content-instruction-inner">
-              {{{compile_a11y_text instruction}}}
+              {{{compile instruction}}}
             </div>
           </div>
           {{/if}}
@@ -46,10 +46,10 @@
       </div>
     </div>
     <div class="scenario-audio-slide-container">
-      <button class="base scenario-audio-controls scenario-audio-control-left" role="button" aria-label="{{_globals._accessibility._ariaLabels.previous}}">
+      <button class="base scenario-audio-controls scenario-audio-control-left" aria-label="{{_globals._accessibility._ariaLabels.previous}}">
         <div class="icon icon-controls-left"></div>
       </button>
-      <button class="base scenario-audio-controls scenario-audio-control-right" role="button" aria-label="{{_globals._accessibility._ariaLabels.next}}">
+      <button class="base scenario-audio-controls scenario-audio-control-right" aria-label="{{_globals._accessibility._ariaLabels.next}}">
         <div class="icon icon-controls-right"></div>
       </button>
       <div class="scenario-audio-slider clearfix">
@@ -72,19 +72,19 @@
         <div class="scenario-audio-content-item">
           {{#if _graphic.alt}}{{{a11y_aria_label _graphic.alt}}}{{/if}}
           <div class="scenario-audio-content-title">
-            <div class="scenario-audio-content-title-inner h5" role="heading" aria-level="5" tabindex="0">
+            <div class="scenario-audio-content-title-inner h5" role="heading" aria-level="5">
               {{{compile title}}}
             </div>
           </div>
           <div class="scenario-audio-content-body">
             <div class="scenario-audio-content-body-inner">
-              {{{compile_a11y_text body}}}
+              {{{compile body}}}
             </div>
           </div>
           {{#if instruction}}
           <div class="scenario-audio-content-instruction">
             <div class="scenario-audio-content-instruction-inner">
-              {{{compile_a11y_text instruction}}}
+              {{{compile instruction}}}
             </div>
           </div>
           {{/if}}
