@@ -1,7 +1,7 @@
 define(function(require) {
 
     var ComponentView = require('coreViews/componentView');
-    var Adapt = require('coreJS/adapt');
+    var Adapt = require('core/js/adapt');
 
     var ScenarioAudio = ComponentView.extend({
 
