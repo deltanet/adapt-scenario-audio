@@ -1,6 +1,6 @@
 define(function(require) {
 
-    var ComponentView = require('coreViews/componentView');
+    var ComponentView = require('core/js/views/componentView');
     var Adapt = require('core/js/adapt');
 
     var ScenarioAudio = ComponentView.extend({
@@ -125,9 +125,9 @@ define(function(require) {
 
         replaceInstructions: function() {
             if (Adapt.device.screenSize === 'large') {
-                this.$('.scenario-audio-instruction-inner').html(this.model.get('instruction')).a11y_text();
+                this.$('.scenario-audio-instruction-inner').html(this.model.get('instruction'));
             } else if (this.model.get('mobileInstruction')) {
-                this.$('.scenario-audio-instruction-inner').html(this.model.get('mobileInstruction')).a11y_text();
+                this.$('.scenario-audio-instruction-inner').html(this.model.get('mobileInstruction'));
             }
         },
 
@@ -368,10 +368,10 @@ define(function(require) {
                 for (var i = 0; i < this.model.get('_items').length; i++) {
                     if(value == 0) {
                         this.$('.scenario-audio-content-title-inner').eq(i).html(this.model.get('_items')[i].title);
-                        this.$('.scenario-audio-content-body-inner').eq(i).html(this.model.get('_items')[i].body).a11y_text();
+                        this.$('.scenario-audio-content-body-inner').eq(i).html(this.model.get('_items')[i].body);
                     } else {
                         this.$('.scenario-audio-content-title-inner').eq(i).html(this.model.get('_items')[i].titleReduced);
-                        this.$('.scenario-audio-content-body-inner').eq(i).html(this.model.get('_items')[i].bodyReduced).a11y_text();
+                        this.$('.scenario-audio-content-body-inner').eq(i).html(this.model.get('_items')[i].bodyReduced);
                     }
                 }
             }
