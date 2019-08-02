@@ -1,56 +1,14 @@
 .mode-large.scenario-audio-component {
-    .scenario-audio-slide-container {
-        width: 100%;
-        margin-right: 3%;
-        float: left;
-        .dir-rtl & {
-            margin-right: inherit;
-            margin-left: 3%;
-            float: right;
-        }
-    }
-
-    .scenario-audio-slider-graphic {
-        margin-right: 0;
-        width: 50%;
-    }
-
     .scenario-audio-strapline {
         display: none;
     }
 
-    .scenario-audio-content-inner {
-        .scenario-audio-controls {
-            position: static;
-            display: none;
-            margin-top: 0px;
-            margin-bottom: 10px;
-            width: auto;
-            height: auto;
-            padding: 8px;
-            .icon {
-                margin: 0px;
-            }
-        }
-        .scenario-audio-indicators {
-            display: none;
-            position: relative;
-            top: -4px;
-        }
-        .scenario-audio-progress {
-            background-color: @item-color-selected;
-            &.selected {
-                background-color: @item-color;
-            }
-        }
-        .scenario-audio-content-item.scenario-audio-hidden {
-            display: none;
-        }
+    .scenario-audio-content-item.scenario-audio-hidden {
+        display: none;
     }
 }
 
 .scenario-audio-component {
-
     .scenario-audio-widget {
         background-color: @background-color;
         margin-top: 0px;
@@ -60,10 +18,6 @@
         width: 100%;
         background-color: @primary-color;
         color: @primary-color-inverted;
-        float: right;
-        .dir-rtl & {
-            float: left;
-        }
     }
 
     .scenario-audio-content-inner {
@@ -91,10 +45,6 @@
         width: 100%;
         position: relative;
         overflow-x: hidden;
-        float: left;
-        .dir-rtl & {
-            float: right;
-        }
     }
 
     .scenario-audio-slider-graphic {
@@ -103,9 +53,14 @@
         .dir-rtl & {
             float: right;
         }
+        img {
+          display: block;
+        }
     }
 
     .scenario-audio-indicators {
+        position: relative;
+        padding-top: 3px;
         text-align: center;
     }
 
@@ -129,7 +84,7 @@
         height: (@icon-size*2);
         position: absolute;
         top: 50%;
-        margin-top: -(@icon-size*2);
+        margin-top: -(@icon-size*1.5);
         z-index: 10;
         text-decoration: none;
         background-color: @item-color;
@@ -181,17 +136,18 @@
     .scenario-audio-strapline-title {
 
         .item-title;
-
         position: relative;
-        float: left;
         text-decoration: none;
         background-color: @button-color;
         color: @button-text-color;
         overflow: hidden;
         min-height: (@item-padding-top + @item-padding-bottom + @icon-size);
+
+        float: left;
         .dir-rtl & {
             float: right;
         }
+
         .icon {
             display: block;
             position: absolute;
@@ -204,6 +160,7 @@
                 left: 0;
             }
         }
+
         .no-touch &:hover {
             background-color: @button-color-hover;
             color: @button-text-color-hover;

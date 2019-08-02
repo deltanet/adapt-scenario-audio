@@ -60,11 +60,6 @@
         {{/each}}
       </div>
     </div>
-    <div class="scenario-audio-indicators">
-      {{#each _items}}
-      <div class="scenario-audio-progress component-item-color component-item-border {{#if _isVisited}}visited{{/if}}" data-index="{{@index}}"></div>
-      {{/each}}
-    </div>
     {{#if _textBelowImage}}
     <div class="scenario-audio-content">
       <div class="scenario-audio-content-inner">
@@ -93,6 +88,11 @@
       </div>
     </div>
     {{/if}}
+    <div class="scenario-audio-indicators">
+      {{#each _items}}
+      <div class="scenario-audio-progress component-item-color component-item-border {{#if _isVisited}}visited{{/if}}" data-index="{{@index}}"></div>
+      {{/each}}
+    </div>
     <div class="clearfix"></div>
   </div>
 </div>
