@@ -1,17 +1,17 @@
-<div class="scenario-audio-inner component-inner" role="region" aria-label="{{_globals._components._scenario-audio.ariaRegion}}">
+<div class="scenario-audio-inner component-inner">
   {{> component this}}
   <div class="scenario-audio-widget component-widget">
     {{#unless _textBelowImage}}
     <div class="scenario-audio-content">
       <div class="scenario-audio-content-inner">
         {{#each _items}}
-        <div class="scenario-audio-content-item">
-          {{#if _graphic.alt}}{{{a11y_aria_label _graphic.alt}}}{{/if}}
+        <div class="scenario-audio-content-item {{#if _isVisited}}visited{{/if}}" data-index="{{@index}}">
           <div class="scenario-audio-content-title">
-            <div class="scenario-audio-content-title-inner h5" role="heading" aria-level="5">
-              {{{compile title}}}
+            <div class="scenario-audio-content-title-inner" {{a11y_attrs_heading 'componentItem'}}>
+              {{{title}}}
             </div>
           </div>
+          {{#if _graphic.alt}}{{{a11y_aria_label _graphic.alt}}}{{/if}}
           <div class="scenario-audio-content-body">
             <div class="scenario-audio-content-body-inner">
               {{{compile body}}}
@@ -31,11 +31,11 @@
     {{/unless}}
     <div class="scenario-audio-strapline">
       <div class="scenario-audio-strapline-header">
-        <div class="scenario-audio-strapline-header-inner clearfix">
+        <div class="scenario-audio-strapline-header-inner clearfix" style="width: {{_totalWidth}}%">
           <div></div>
           {{#each _items}}
-          <button class="base scenario-audio-strapline-title" aria-label="{{{strapline}}}">
-            <div class="scenario-audio-strapline-title-inner accessible-text-block h5">
+          <button class="base scenario-audio-strapline-title {{#if _isVisited}}visited{{/if}}" aria-label="{{{strapline}}}" style="width: {{../_itemWidth}}%" data-index="{{@index}}">
+            <div class="scenario-audio-strapline-title-inner h5">
               {{{strapline}}}
             </div>
             <div class="icon icon-plus"></div>
@@ -52,30 +52,30 @@
       <button class="base scenario-audio-controls scenario-audio-control-right" aria-label="{{_globals._accessibility._ariaLabels.next}}">
         <div class="icon icon-controls-right"></div>
       </button>
-      <div class="scenario-audio-slider clearfix">
+      <div class="scenario-audio-slider clearfix" style="width: {{_totalWidth}}%">
         {{#each _items}}
-        <div class="scenario-audio-slider-graphic {{#if visited}}visited{{/if}}">
-          <img src="{{_graphic.src}}"/>
+        <div class="scenario-audio-slider-graphic {{#if visited}}visited{{/if}}" style="width: {{../_itemWidth}}%" data-index="{{@index}}">
+          <img src="{{_graphic.src}}" aria-hidden="true" />
         </div>
         {{/each}}
       </div>
     </div>
     <div class="scenario-audio-indicators">
       {{#each _items}}
-      <div class="scenario-audio-progress component-item-color component-item-border"></div>
+      <div class="scenario-audio-progress component-item-color component-item-border {{#if _isVisited}}visited{{/if}}" data-index="{{@index}}"></div>
       {{/each}}
     </div>
     {{#if _textBelowImage}}
     <div class="scenario-audio-content">
       <div class="scenario-audio-content-inner">
         {{#each _items}}
-        <div class="scenario-audio-content-item">
-          {{#if _graphic.alt}}{{{a11y_aria_label _graphic.alt}}}{{/if}}
+        <div class="scenario-audio-content-item {{#if _isVisited}}visited{{/if}}" data-index="{{@index}}">
           <div class="scenario-audio-content-title">
-            <div class="scenario-audio-content-title-inner h5" role="heading" aria-level="5">
-              {{{compile title}}}
+            <div class="scenario-audio-content-title-inner" {{a11y_attrs_heading 'componentItem'}}>
+              {{{title}}}
             </div>
           </div>
+          {{#if _graphic.alt}}{{{a11y_aria_label _graphic.alt}}}{{/if}}
           <div class="scenario-audio-content-body">
             <div class="scenario-audio-content-body-inner">
               {{{compile body}}}

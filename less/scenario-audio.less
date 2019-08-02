@@ -1,66 +1,64 @@
+.mode-large.scenario-audio-component {
+    .component-instruction {
+        background-color: @primary-color !important;
+        color: @primary-color-inverted !important;
+    }
+    
+    .scenario-audio-slide-container {
+        width: 100%;
+        margin-right: 3%;
+        float: left;
+        .dir-rtl & {
+            margin-right: inherit;
+            margin-left: 3%;
+            float: right;
+        }
+    }
+
+    .scenario-audio-slider-graphic {
+        margin-right: 0;
+        width: 50%;
+    }
+
+    .scenario-audio-strapline {
+        display: none;
+    }
+
+    .scenario-audio-content-inner {
+        .scenario-audio-controls {
+            position: static;
+            display: none;
+            margin-top: 0px;
+            margin-bottom: 10px;
+            width: auto;
+            height: auto;
+            padding: 8px;
+            .icon {
+                margin: 0px;
+            }
+        }
+        .scenario-audio-indicators {
+            display: none;
+            position: relative;
+            top: -4px;
+        }
+        .scenario-audio-progress {
+            background-color: @item-color-selected;
+            &.selected {
+                background-color: @item-color;
+            }
+        }
+        .scenario-audio-content-item.scenario-audio-hidden {
+            display: none;
+        }
+    }
+}
+
 .scenario-audio-component {
 
-  .component-instruction {
-      background-color: @primary-color !important;
-      color: @primary-color-inverted !important;
-  }
-
-  .scenario-audio-widget {
-      background-color: @background-color;
-      margin-top: 0px;
-  }
-
-    &.desktop {
-        .scenario-audio-slide-container {
-            width: 100%;
-            margin-right: 3%;
-            float: left;
-            .dir-rtl & {
-                margin-right: inherit;
-                margin-left: 3%;
-                float: right;
-            }
-        }
-
-        .scenario-audio-content-title-inner {
-          font-weight: @item-title-font-weight;
-          margin-bottom: @item-padding-bottom;
-        }
-
-        .scenario-audio-slider-graphic {
-            margin-right: 0;
-            width:50%;
-        }
-
-        .scenario-audio-strapline {
-            display:none;
-        }
-
-        .scenario-audio-content-inner {
-            .scenario-audio-controls {
-                position: static;
-                display: none;
-                margin-top: 0px;
-                margin-bottom: 10px;
-                width: auto;
-                height: auto;
-                padding: 8px;
-                .icon {
-                    margin: 0px;
-                }
-            }
-            .scenario-audio-indicators {
-                display: none;
-                position: relative;
-                top: -4px;
-            }
-            .scenario-audio-progress {
-                background-color: @item-color;
-                &.selected {
-                    background-color: @item-color-selected;
-                }
-            }
-        }
+    .scenario-audio-widget {
+        background-color: @background-color;
+        margin-top: 0px;
     }
 
     .scenario-audio-content {
@@ -74,13 +72,11 @@
     }
 
     .scenario-audio-content-inner {
-        padding: 0 @component-padding @component-padding @component-padding;
+        padding: @body-text-margin;
     }
 
-    &.mobile {
-        .scenario-audio-content {
-            display:none;
-        }
+    &.mode-small .scenario-audio-content {
+        display:none;
     }
 
     .scenario-audio-content-instruction {
@@ -89,7 +85,12 @@
         instr {
             color: @button-color;
         }
-  	}
+    }
+
+    .scenario-audio-content-title {
+      margin-bottom: @title-text-margin;
+      .item-title;
+    }
 
     .scenario-audio-slide-container {
         width: 100%;
@@ -102,30 +103,15 @@
     }
 
     .scenario-audio-slider-graphic {
-      overflow: hidden;
         position: relative;
         float: left;
         .dir-rtl & {
             float: right;
         }
-
-        img {
-          display: block;
-        }
-    }
-
-    .scenario-audio-item-title {
-        position: relative;
-        display: block;
     }
 
     .scenario-audio-indicators {
         text-align: center;
-
-        background-color: @text-background-color;
-        .no-opacity & {
-            background-color: @text-background-color-fallback;
-        }
     }
 
     .scenario-audio-progress {
@@ -133,15 +119,12 @@
         height: (@icon-size/2);
         display: inline-block;
         margin: 1px;
-        margin-top: 10px;
         border: inherit;
         border-radius: 50%;
+        background-color: @item-color-selected;
         cursor: pointer;
-
-        background-color: @item-color;
-
         &.selected {
-          background-color: @item-color-selected;
+          background-color: @item-color;
         }
     }
 
@@ -151,7 +134,7 @@
         height: (@icon-size*2);
         position: absolute;
         top: 50%;
-        margin-top: -(@icon-size);
+        margin-top: -(@icon-size*2);
         z-index: 10;
         text-decoration: none;
         background-color: @item-color;
@@ -166,7 +149,7 @@
             color: @item-text-color;
         }
         &.scenario-audio-hidden {
-            display: none;
+            visibility: hidden;
         }
     }
 
@@ -201,20 +184,26 @@
     }
 
     .scenario-audio-strapline-title {
+
+        .item-title;
+
         position: relative;
         float: left;
         text-decoration: none;
         background-color: @button-color;
         color: @button-text-color;
+        overflow: hidden;
+        min-height: (@item-padding-top + @item-padding-bottom + @icon-size);
         .dir-rtl & {
             float: right;
         }
         .icon {
             display: block;
             position: absolute;
-            top: 10px;
-            right: 10px;
-            color: @button-text-color-hover;
+            padding: @item-padding-top @item-padding-right @item-padding-bottom;
+            color: @item-text-color;
+            top: 0;
+            right: 0;
             .dir-rtl & {
                 right: inherit;
                 left: 0;
@@ -228,6 +217,11 @@
             }
 
         }
+
+        &.visited {
+          background-color: @item-color-visited;
+        }
+
         .focus-rect {
             position: absolute;
             right: extract(@focus-outline, 1);
@@ -238,13 +232,15 @@
     }
 
     .scenario-audio-strapline-title-inner {
-        height: (@item-padding-top + @item-padding-bottom + @icon-size);
-        line-height: (@item-padding-top + @item-padding-bottom + @icon-size);
         padding-left: (@icon-size/2);
         padding-right: (@item-padding-left + @item-padding-right + @icon-size);
-        text-overflow: ellipsis;
-        white-space: nowrap;
+        padding-top: 10px;
+        padding-bottom: 10px;
         overflow: hidden;
+        width: 100%;
+        box-sizing: border-box;
+        overflow: hidden;
+        vertical-align: middle;
         .dir-rtl & {
             padding-right: (@icon-size/2);
             padding-left: (@item-padding-left + @item-padding-right + @icon-size);
@@ -273,37 +269,13 @@
     }
 
     .scenario-audio-hidden {
-        display:none;
+        visibility: hidden;
     }
 
-    button.base.disabled {
-      min-height: 44px;
-    }
-}
-
-
-html.accessibility {
-
-    .scenario-audio-control-left:focus, .scenario-audio-control-left.focus {
-        left: extract(@focus-outline, 1);
-        .dir-rtl & {
-            left: inherit;
-            right: extract(@focus-outline, 1);
-        }
-    }
-
-    .scenario-audio-control-right:focus, .scenario-audio-control-right.focus {
-        right: extract(@focus-outline, 1);
-        .dir-rtl & {
-            right: inherit;
-            left: extract(@focus-outline, 1);
-        }
-    }
-
-
-    &.no-touch {
-        .scenario-audio-strapline-title:focus .focus-rect {
-            outline: @focus-outline;
+    &:not(.disable-animation) {
+        .scenario-audio-slider,
+        .scenario-audio-strapline-header-inner {
+            transition: transform 400ms ease-in-out;
         }
     }
 }
