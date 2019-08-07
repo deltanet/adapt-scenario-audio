@@ -6,11 +6,13 @@
       <div class="scenario-audio-content-inner">
         {{#each _items}}
         <div class="scenario-audio-content-item {{#if _isVisited}}visited{{/if}}" data-index="{{@index}}">
+          {{#if title}}
           <div class="scenario-audio-content-title">
             <div class="scenario-audio-content-title-inner" {{a11y_attrs_heading 'componentItem'}}>
               {{{title}}}
             </div>
           </div>
+          {{/if}}
           {{#if _graphic.alt}}{{{a11y_aria_label _graphic.alt}}}{{/if}}
           <div class="scenario-audio-content-body">
             <div class="scenario-audio-content-body-inner">
