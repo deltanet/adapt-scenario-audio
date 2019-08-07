@@ -56,8 +56,13 @@ define([
             this.calculateMode();
             if (this.isLargeMode()) {
                 this.$el.addClass('mode-large').removeClass('mode-small');
+
+                if (this.model.get('instruction') == "") {
+                  this.$el.addClass('remove-instruction');
+                }
             } else {
                 this.$el.addClass('mode-small').removeClass('mode-large');
+                this.$el.removeClass('remove-instruction');
             }
         },
 
