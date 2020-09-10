@@ -22,7 +22,7 @@ define([
       });
       this.renderMode();
 
-      this.listenTo(this.model.get('_children'), {
+      this.listenTo(this.model.getChildren(), {
         'change:_isActive': this.onItemsActiveChange,
         'change:_isVisited': this.onItemsVisitedChange
       });
@@ -91,7 +91,7 @@ define([
 
     setupScenarioAudio: function() {
       this.renderMode();
-      var items = this.model.get('_children');
+      var items = this.model.getChildren();
       if (!items || !items.length) return;
 
       var activeItem = this.model.getActiveItem();
@@ -117,7 +117,7 @@ define([
     },
 
     calculateWidths: function() {
-      var itemCount = this.model.get('_children').length;
+      var itemCount = this.model.getChildren().length;
       this.model.set({
         '_totalWidth': 100 * itemCount,
         '_itemWidth': 100 / itemCount
@@ -187,11 +187,16 @@ define([
       }
 
       var $slideGraphics = this.$('.scenario-audio-slider-graphic');
+      var $contentItem = this.$('.scenario-audio-content-item');
+      var $straplineTitle = this.$('.scenario-audio-strapline-title');
       this.$('.scenario-audio-progress:visible').removeClass('selected').filter('[data-index="' + index + '"]').addClass('selected');
-      $slideGraphics.children('.controls').a11y_cntrl_enabled(false);
-      $slideGraphics.filter('[data-index="' + index + '"]').children('.controls').a11y_cntrl_enabled(true);
-      this.$('.scenario-audio-content-item').addClass('scenario-audio-hidden').a11y_on(false).filter('[data-index="' + index + '"]').removeClass('scenario-audio-hidden').a11y_on(true);
-      this.$('.scenario-audio-strapline-title').a11y_cntrl_enabled(false).filter('[data-index="' + index + '"]').a11y_cntrl_enabled(true);
+      Adapt.a11y.toggleAccessibleEnabled($slideGraphics.children('.controls'), false);
+      Adapt.a11y.toggleAccessibleEnabled($slideGraphics.filter('[data-index="' + index + '"]').children('.controls'), true);
+      $contentItem.addClass('scenario-audio-hidden').filter('[data-index="' + index + '"]').removeClass('scenario-audio-hidden');
+      Adapt.a11y.toggleAccessibleEnabled($contentItem, false);
+      Adapt.a11y.toggleAccessibleEnabled($contentItem.filter('[data-index="' + index + '"]'), true);
+      Adapt.a11y.toggleAccessibleEnabled($straplineTitle, false);
+      Adapt.a11y.toggleAccessibleEnabled($straplineTitle.filter('[data-index="' + index + '"]'), true);
 
       this.evaluateNavigation();
       this.evaluateCompletion();
@@ -203,7 +208,7 @@ define([
       if (!active) return;
 
       var currentStage = active.get('_index');
-      var itemCount = this.model.get('_children').length;
+      var itemCount = this.model.getChildren().length;
 
       var isAtStart = currentStage === 0;
       var isAtEnd = currentStage === itemCount - 1;
