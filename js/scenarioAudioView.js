@@ -173,9 +173,9 @@ define([
 
       var index = this.model.getActiveItem().get('_index');
       if (this.isLargeMode()) {
-        this.$('.scenario-audio-content-item[data-index="' + index + '"]').a11y_focus();
+        Adapt.a11y.focusFirst(this.$('.scenario-audio-content-item[data-index="' + index + '"]'));
       } else {
-        this.$('.scenario-audio-strapline-title').a11y_focus();
+        Adapt.a11y.focusFirst(this.$('.scenario-audio-strapline-title'));
       }
     },
 
