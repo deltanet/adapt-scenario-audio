@@ -233,7 +233,7 @@ define([
                 itemBody = currentItem.get('bodyReduced');
             }
 
-            Adapt.trigger('notify:popup', {
+            Adapt.notify.popup({
                 title: itemTitle,
                 body: itemBody
             });
@@ -279,7 +279,7 @@ define([
 
         setupEventListeners: function() {
             if (this.model.get('_setCompletionOn') === 'inview') {
-                this.setupInviewCompletion('.component-widget');
+                this.setupInviewCompletion('.component__widget');
             }
         },
 

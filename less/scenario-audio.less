@@ -1,4 +1,4 @@
-@btn-color.mode-large.scenario-audio-component {
+.mode-large.scenario-audio {
     .scenario-audio-strapline {
         display: none;
     }
@@ -14,7 +14,7 @@
     }
 }
 
-.scenario-audio-component {
+.scenario-audio {
     .scenario-audio-widget {
         background-color: @item-color;
         margin-top: 0px;
@@ -22,8 +22,8 @@
 
     .scenario-audio-content {
         width: 100%;
-        background-color: @item-color;
-        color: @item-color-inverted;
+        background-color: @background-inverted;
+        color: @font-color;
     }
 
     .scenario-audio-content-inner {
@@ -76,10 +76,10 @@
         margin: 1px;
         border: inherit;
         border-radius: 50%;
-        background-color: @item-color-selected;
+        background-color: @nav-icon;
         cursor: pointer;
         &.selected {
-          background-color: @item-color;
+          background-color: @nav-icon-inverted;
         }
     }
 
@@ -96,12 +96,12 @@
         .no-touch &:hover {
             background-color: @item-color-hover;
             .icon {
-                color: @item-color-hover;
+                color: @item-color-inverted-hover;
             }
         }
         .icon {
             margin: (@icon-size/2);
-            color: @item-color;
+            color: @item-color-inverted;
         }
         &.scenario-audio-hidden {
             visibility: hidden;

@@ -1,7 +1,7 @@
 {
   "name": "adapt-scenario-audio",
-  "version": "3.0.1",
-  "framework": ">=4",
+  "version": "4.0.0",
+  "framework": ">=5",
   "homepage": "https://github.com/deltanet/adapt-scenario-audio",
   "issues": "https://github.com/deltanet/adapt-scenario-audio/issues",
   "displayName" : "Scenario",
@@ -12,5 +12,5 @@
     "adapt-plugin",
     "adapt-component"
   ],
-  "license": "GPLv3"
+  "license": "GPL-3.0"
 }
