@@ -1,4 +1,4 @@
-.mode-large.scenario-audio-component {
+@btn-color.mode-large.scenario-audio-component {
     .scenario-audio-strapline {
         display: none;
     }
@@ -16,18 +16,18 @@
 
 .scenario-audio-component {
     .scenario-audio-widget {
-        background-color: @background-color;
+        background-color: @item-color;
         margin-top: 0px;
     }
 
     .scenario-audio-content {
         width: 100%;
-        background-color: @primary-color;
-        color: @primary-color-inverted;
+        background-color: @item-color;
+        color: @item-color-inverted;
     }
 
     .scenario-audio-content-inner {
-        padding: @body-text-margin;
+        padding: @component-body-margin;
     }
 
     &.mode-small .scenario-audio-content {
@@ -38,13 +38,12 @@
         font-weight: bold;
 
         instr {
-            color: @button-color;
+            color: @btn-color;
         }
     }
 
     .scenario-audio-content-title {
-      margin-bottom: @title-text-margin;
-      .sub-title;
+      margin-bottom: @component-title-margin;
     }
 
     .scenario-audio-slide-container {
@@ -97,12 +96,12 @@
         .no-touch &:hover {
             background-color: @item-color-hover;
             .icon {
-                color: @item-text-color-hover;
+                color: @item-color-hover;
             }
         }
         .icon {
             margin: (@icon-size/2);
-            color: @item-text-color;
+            color: @item-color;
         }
         &.scenario-audio-hidden {
             visibility: hidden;
@@ -144,10 +143,10 @@
         .item-title;
         position: relative;
         text-decoration: none;
-        background-color: @button-color;
-        color: @button-text-color;
+        background-color: @btn-color;
+        color: @btn-color-inverted;
         overflow: hidden;
-        min-height: (@item-padding-top + @item-padding-bottom + @icon-size);
+        min-height: (@item-padding + @icon-size);
 
         float: left;
         .dir-rtl & {
@@ -157,8 +156,8 @@
         .icon {
             display: block;
             position: absolute;
-            padding: @item-padding-top @item-padding-right @item-padding-bottom;
-            color: @item-text-color;
+            padding: @item-padding;
+            color: @item-color;
             top: 0;
             right: 0;
             .dir-rtl & {
@@ -168,16 +167,16 @@
         }
 
         .no-touch &:hover {
-            background-color: @button-color-hover;
-            color: @button-text-color-hover;
+            background-color: @btn-color-hover;
+            color: @btn-color-inverted-hover;
             .icon {
-                color: @button-text-color-hover;
+                color: @btn-color-inverted-hover;
             }
 
         }
 
         &.visited {
-          background-color: @item-color-visited;
+          background-color: @visited;
         }
 
         .focus-rect {
@@ -191,7 +190,7 @@
 
     .scenario-audio-strapline-title-inner {
         padding-left: (@icon-size/2);
-        padding-right: (@item-padding-left + @item-padding-right + @icon-size);
+        padding-right: (@item-padding + @icon-size);
         padding-top: 10px;
         padding-bottom: 10px;
         overflow: hidden;
@@ -201,7 +200,7 @@
         vertical-align: middle;
         .dir-rtl & {
             padding-right: (@icon-size/2);
-            padding-left: (@item-padding-left + @item-padding-right + @icon-size);
+            padding-left: (@item-padding + @icon-size);
         }
     }
 
@@ -211,7 +210,7 @@
         top:0;
         right:0;
         padding: @item-padding;
-        background-color: @background-color-inverted;
+        background-color: @item-color-inverted;
         text-decoration: none;
         z-index: 5;
         .dir-rtl & {
@@ -219,9 +218,9 @@
             left:0;
         }
         .icon {
-            color: @foreground-color-inverted;
+            color: @item-color-inverted;
             .no-touch &:hover {
-                color: lighten(@background-color-inverted, 30%);
+                color: lighten(@item-color-inverted, 30%);
             }
         }
     }
