@@ -10,9 +10,9 @@ define([
     _isInitial: true,
 
     events: {
-      'click .scenario-audio-strapline-title': 'openPopup',
-      'click .scenario-audio-controls': 'onNavigationClicked',
-      'click .scenario-audio-indicators .scenario-audio-progress': 'onProgressClicked'
+      'click .js-strapline-controls': 'openPopup',
+      'click .js-scenario-controls': 'onNavigationClicked',
+      'click .js-indicator-controls': 'onProgressClicked'
     },
 
     preRender: function() {
@@ -42,7 +42,7 @@ define([
 
     onItemsVisitedChange: function(item, isVisited) {
       if (!isVisited) return;
-      this.$('[data-index="' + item.get('_index') + '"]').addClass('visited');
+      this.$('[data-index="' + item.get('_index') + '"]').addClass('is-visited');
     },
 
     calculateMode: function() {
@@ -74,7 +74,7 @@ define([
       this.renderMode();
       this.setupScenarioAudio();
 
-      this.$('.scenario-audio-slider').imageready(this.setReadyStatus.bind(this));
+      this.$('.scenario-audio__slider').imageready(this.setReadyStatus.bind(this));
 
       if (Adapt.config.get('_disableAnimation')) {
         this.$el.addClass('disable-animation');
@@ -155,8 +155,8 @@ define([
         offset *= -1;
       }
       var cssValue = 'translateX(' + offset + '%)';
-      var $sliderElm = this.$('.scenario-audio-slider');
-      var $straplineHeaderElm = this.$('.scenario-audio-strapline-header-inner');
+      var $sliderElm = this.$('.scenario-audio__slider');
+      var $straplineHeaderElm = this.$('.scenario-audio__strapline-header-inner');
 
       $sliderElm.css('transform', cssValue);
       $straplineHeaderElm.css('transform', cssValue);
@@ -173,9 +173,9 @@ define([
 
       var index = this.model.getActiveItem().get('_index');
       if (this.isLargeMode()) {
-        Adapt.a11y.focusFirst(this.$('.scenario-audio-content-item[data-index="' + index + '"]'));
+        Adapt.a11y.focusFirst(this.$('.scenario-audio-content__item[data-index="' + index + '"]'));
       } else {
-        Adapt.a11y.focusFirst(this.$('.scenario-audio-strapline-title'));
+        Adapt.a11y.focusFirst(this.$('.scenario-audio__strapline-title'));
       }
     },
 
@@ -186,13 +186,13 @@ define([
         item.toggleVisited(true);
       }
 
-      var $slideGraphics = this.$('.scenario-audio-slider-graphic');
-      var $contentItem = this.$('.scenario-audio-content-item');
-      var $straplineTitle = this.$('.scenario-audio-strapline-title');
-      this.$('.scenario-audio-progress:visible').removeClass('selected').filter('[data-index="' + index + '"]').addClass('selected');
+      var $slideGraphics = this.$('.scenario-audio__slider-graphic');
+      var $contentItem = this.$('.scenario-audio-content__item');
+      var $straplineTitle = this.$('.scenario-audio__strapline-title');
+      this.$('.scenario-audio__progress:visible').removeClass('selected').filter('[data-index="' + index + '"]').addClass('selected');
       Adapt.a11y.toggleAccessibleEnabled($slideGraphics.children('.controls'), false);
       Adapt.a11y.toggleAccessibleEnabled($slideGraphics.filter('[data-index="' + index + '"]').children('.controls'), true);
-      $contentItem.addClass('scenario-audio-hidden').filter('[data-index="' + index + '"]').removeClass('scenario-audio-hidden');
+      $contentItem.addClass('scenario-audio__hidden').filter('[data-index="' + index + '"]').removeClass('scenario-audio__hidden');
       Adapt.a11y.toggleAccessibleEnabled($contentItem, false);
       Adapt.a11y.toggleAccessibleEnabled($contentItem.filter('[data-index="' + index + '"]'), true);
       Adapt.a11y.toggleAccessibleEnabled($straplineTitle, false);
@@ -213,8 +213,8 @@ define([
       var isAtStart = currentStage === 0;
       var isAtEnd = currentStage === itemCount - 1;
 
-      this.$('.scenario-audio-control-left').toggleClass('scenario-audio-hidden', isAtStart);
-      this.$('.scenario-audio-control-right').toggleClass('scenario-audio-hidden', isAtEnd);
+      this.$('.scenario-audio__control-left').toggleClass('scenario-audio__hidden', isAtStart);
+      this.$('.scenario-audio__control-right').toggleClass('scenario-audio__hidden', isAtEnd);
     },
 
     evaluateCompletion: function() {
@@ -259,9 +259,9 @@ define([
     onNavigationClicked: function(event) {
       var stage = this.model.getActiveItem().get('_index');
 
-      if ($(event.currentTarget).hasClass('scenario-audio-control-right')) {
+      if ($(event.currentTarget).hasClass('scenario-audio__control-right')) {
         this.model.setActiveItem(++stage);
-      } else if ($(event.currentTarget).hasClass('scenario-audio-control-left')) {
+      } else if ($(event.currentTarget).hasClass('scenario-audio__control-left')) {
         this.model.setActiveItem(--stage);
       }
 
@@ -295,11 +295,11 @@ define([
         // Change each items title and body
         for (var i = 0; i < this.model.get('_items').length; i++) {
           if (value == 0) {
-            this.$('.scenario-audio-content-title-inner').eq(i).html(this.model.get('_items')[i].title);
-            this.$('.scenario-audio-content-body-inner').eq(i).html(this.model.get('_items')[i].body);
+            this.$('.scenario-audio__content-title-inner').eq(i).html(this.model.get('_items')[i].title);
+            this.$('.scenario-audio__content-body-inner').eq(i).html(this.model.get('_items')[i].body);
           } else {
-            this.$('.scenario-audio-content-title-inner').eq(i).html(this.model.get('_items')[i].titleReduced);
-            this.$('.scenario-audio-content-body-inner').eq(i).html(this.model.get('_items')[i].bodyReduced);
+            this.$('.scenario-audio__content-title-inner').eq(i).html(this.model.get('_items')[i].titleReduced);
+            this.$('.scenario-audio__content-body-inner').eq(i).html(this.model.get('_items')[i].bodyReduced);
           }
         }
       }

@@ -1,40 +1,40 @@
 .mode-large.scenario-audio {
-  .scenario-audio-strapline {
+  .scenario-audio__strapline {
     display: none;
   }
 
-  .scenario-audio-content-item.scenario-audio-hidden {
+  .scenario-audio__content-item.scenario-audio__hidden {
     display: none;
   }
 
   &.remove-instruction {
-    .component-instruction {
+    .component__instruction {
       display: none;
     }
   }
 }
 
 .scenario-audio {
-  .scenario-audio-widget {
+  &__widget {
     background-color: @item-color;
     margin-top: 0;
   }
 
-  .scenario-audio-content {
+  &__content {
     width: 100%;
     background-color: @background-inverted;
     color: @font-color;
   }
 
-  .scenario-audio-content-inner {
+  &__content-inner {
     padding: @component-body-margin;
   }
 
-  &.mode-small .scenario-audio-content {
+  &.mode-small .scenario-audio__content {
     display: none;
   }
 
-  .scenario-audio-content-instruction {
+  &__content-instruction {
     font-weight: bold;
 
     instr {
@@ -42,17 +42,17 @@
     }
   }
 
-  .scenario-audio-content-title {
+  &__content-title {
     margin-bottom: @component-title-margin;
   }
 
-  .scenario-audio-slide-container {
+  &__slide-container {
     width: 100%;
     position: relative;
     overflow-x: hidden;
   }
 
-  .scenario-audio-slider-graphic {
+  &__slider-graphic {
     position: relative;
     float: left;
 
@@ -65,13 +65,13 @@
     }
   }
 
-  .scenario-audio-indicators {
+  &__indicators {
     position: relative;
     padding-top: 3px;
     text-align: center;
   }
 
-  .scenario-audio-progress {
+  &__progress {
     width: (@icon-size/2);
     height: (@icon-size/2);
     display: inline-block;
@@ -86,7 +86,7 @@
     }
   }
 
-  .scenario-audio-controls {
+  &__controls {
     display: block;
     width: (@icon-size*2);
     height: (@icon-size*2);
@@ -110,12 +110,12 @@
       color: @item-color-inverted;
     }
 
-    &.scenario-audio-hidden {
+    &.scenario-audio__hidden {
       visibility: hidden;
     }
   }
 
-  .scenario-audio-control-left {
+  &__control-left {
     left: 0;
 
     .dir-rtl & {
@@ -124,7 +124,7 @@
     }
   }
 
-  .scenario-audio-control-right {
+  &__control-right {
     right: 0;
 
     .dir-rtl & {
@@ -133,21 +133,21 @@
     }
   }
 
-  .scenario-audio-strapline {
+  &__strapline {
     height: auto;
     position: relative;
   }
 
-  .scenario-audio-strapline-header {
+  &__strapline-header {
     overflow: hidden;
     position: relative;
   }
 
-  .scenario-audio-strapline-header-inner {
+  &__strapline-header-inner {
     position: relative;
   }
 
-  .scenario-audio-strapline-title {
+  &__strapline-title {
     .item-title;
     position: relative;
     text-decoration: none;
@@ -184,7 +184,7 @@
       }
     }
 
-    &.visited {
+    &.is-visited {
       background-color: @visited;
     }
 
@@ -197,7 +197,7 @@
     }
   }
 
-  .scenario-audio-strapline-title-inner {
+  &__strapline-title-inner {
     padding: 10px (@item-padding + @icon-size) 10px (@icon-size/2);
     overflow: hidden;
     width: 100%;
@@ -235,13 +235,13 @@
     }
   }
 
-  .scenario-audio-hidden {
+  &__hidden {
     visibility: hidden;
   }
 
   &:not(.disable-animation) {
-    .scenario-audio-slider,
-    .scenario-audio-strapline-header-inner {
+    .scenario-audio__slider,
+    .scenario-audio__strapline-header-inner {
       transition: transform 400ms ease-in-out;
     }
   }
