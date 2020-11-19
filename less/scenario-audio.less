@@ -16,13 +16,13 @@
 
 .scenario-audio {
   &__widget {
-    background-color: @item-color;
+    background: @font-color-inverted;
     margin-top: 0;
   }
 
   &__content {
     width: 100%;
-    background-color: @background-inverted;
+    background: @font-color-inverted;
     color: @font-color;
   }
 
@@ -35,7 +35,8 @@
   }
 
   &__content-instruction {
-    font-weight: bold;
+    .instruction-text;
+    margin-top: @component-instruction-margin;
 
     instr {
       color: @btn-color;
@@ -43,6 +44,7 @@
   }
 
   &__content-title {
+    .item-title;
     margin-bottom: @component-title-margin;
   }
 
@@ -78,36 +80,27 @@
     margin: 1px;
     border: inherit;
     border-radius: 50%;
-    background-color: @nav-icon;
+    background-color: @item-color;
     cursor: pointer;
 
     &.selected {
-      background-color: @nav-icon-inverted;
+      background-color: @item-color-selected;
     }
   }
 
   &__controls {
-    display: block;
-    width: (@icon-size*2);
-    height: (@icon-size*2);
     position: absolute;
     top: 50%;
-    margin-top: -(@icon-size*1.5);
     z-index: 10;
-    text-decoration: none;
+    .transform(translateY(-50%));
+
     background-color: @item-color;
+    color: @item-color-inverted;
 
     .no-touch &:hover {
       background-color: @item-color-hover;
-
-      .icon {
-        color: @item-color-inverted-hover;
-      }
-    }
-
-    .icon {
-      margin: (@icon-size/2);
-      color: @item-color-inverted;
+      color: @item-color-inverted-hover;
+      .transition(background-color @duration ease-in, color @duration ease-in;);
     }
 
     &.scenario-audio__hidden {
@@ -236,7 +229,8 @@
   }
 
   &__hidden {
-    visibility: hidden;
+    //visibility: hidden;
+    display: none;
   }
 
   &:not(.disable-animation) {
