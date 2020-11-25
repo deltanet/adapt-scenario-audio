@@ -189,7 +189,7 @@ define([
       var $slideGraphics = this.$('.scenario-audio__slider-graphic');
       var $contentItem = this.$('.scenario-audio-content__item');
       var $straplineTitle = this.$('.scenario-audio__strapline-title');
-      this.$('.scenario-audio__progress:visible').removeClass('selected').filter('[data-index="' + index + '"]').addClass('selected');
+      this.$('.scenario-audio__progress:visible').removeClass('is-selected').filter('[data-index="' + index + '"]').addClass('is-selected');
       Adapt.a11y.toggleAccessibleEnabled($slideGraphics.children('.controls'), false);
       Adapt.a11y.toggleAccessibleEnabled($slideGraphics.filter('[data-index="' + index + '"]').children('.controls'), true);
       $contentItem.addClass('scenario-audio__hidden').filter('[data-index="' + index + '"]').removeClass('scenario-audio__hidden');

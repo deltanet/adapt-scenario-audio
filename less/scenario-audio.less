@@ -68,24 +68,22 @@
   }
 
   &__indicators {
-    position: relative;
-    padding-top: 3px;
-    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
   }
 
   &__progress {
-    width: (@icon-size/2);
-    height: (@icon-size/2);
-    display: inline-block;
-    margin: 1px;
-    border: inherit;
-    border-radius: 50%;
-    background-color: @item-color;
+    width: @icon-size / 2;
+    height: @icon-size / 2;
+    margin: 0.25rem;
     cursor: pointer;
+    background-color: @item-color;
+  }
 
-    &.selected {
-      background-color: @item-color-selected;
-    }
+  &__progress.is-selected {
+    background-color: @item-color-selected;
   }
 
   &__controls {
@@ -127,8 +125,11 @@
   }
 
   &__strapline {
-    height: auto;
     position: relative;
+
+    @media (min-width: @device-width-medium) {
+      display: none;
+    }
   }
 
   &__strapline-header {
@@ -136,107 +137,71 @@
     position: relative;
   }
 
-  &__strapline-header-inner {
+  &__strapline-btn {
     position: relative;
+    .u-float-left;
+    padding: 0;
+    outline-offset: -5px;
+  }
+
+  .ie &__strapline-btn:focus .focus-rect {
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+    top: 5px;
+    left: 5px;
+    outline-color: highlight;
+    outline-style: solid;
+    outline-width: 3px;
   }
 
   &__strapline-title {
-    .item-title;
-    position: relative;
-    text-decoration: none;
-    background-color: @btn-color;
-    color: @btn-color-inverted;
-    overflow: hidden;
-    min-height: (@item-padding + @icon-size);
-    float: left;
+    margin-right: @icon-size + (@item-padding * 2);
+    padding: @item-padding;
+    // Override button line height to match icon size
+    line-height: @icon-size;
 
     .dir-rtl & {
-      float: right;
-    }
-
-    .icon {
-      display: block;
-      position: absolute;
-      padding: @item-padding;
-      color: @item-color;
-      top: 0;
-      right: 0;
-
-      .dir-rtl & {
-        right: inherit;
-        left: 0;
-      }
-    }
-
-    .no-touch &:hover {
-      background-color: @btn-color-hover;
-      color: @btn-color-inverted-hover;
-
-      .icon {
-        color: @btn-color-inverted-hover;
-      }
-    }
-
-    &.is-visited {
-      background-color: @visited;
-    }
-
-    .focus-rect {
-      position: absolute;
-      right: extract(@focus-outline, 1);
-      bottom: extract(@focus-outline, 1);
-      top: extract(@focus-outline, 1);
-      left: extract(@focus-outline, 1);
+      margin-right: inherit;
+      margin-left: @icon-size + (@item-padding * 2);
     }
   }
 
   &__strapline-title-inner {
-    padding: 10px (@item-padding + @icon-size) 10px (@icon-size/2);
     overflow: hidden;
-    width: 100%;
-    box-sizing: border-box;
-    overflow: hidden;
-    vertical-align: middle;
-
-    .dir-rtl & {
-      padding-right: (@icon-size/2);
-      padding-left: (@item-padding + @icon-size);
-    }
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
-  .scenario-audio-popup-open {
-    display: block;
+  &__strapline-icon {
     position: absolute;
     top: 0;
     right: 0;
-    padding: @item-padding;
-    background-color: @item-color-inverted;
-    text-decoration: none;
-    z-index: 5;
 
     .dir-rtl & {
       right: inherit;
       left: 0;
     }
-
-    .icon {
-      color: @item-color-inverted;
-
-      .no-touch &:hover {
-        color: lighten(@item-color-inverted, 30%);
-      }
-    }
   }
+
+  &__strapline-icon .icon {
+    .icon-plus;
+  }
+
 
   &__hidden {
     //visibility: hidden;
     display: none;
   }
 
-  &:not(.disable-animation) {
-    .scenario-audio__slider,
-    .scenario-audio__strapline-header-inner {
-      transition: transform 400ms ease-in-out;
+  // --------------------------------------------------
+  // When the disable animation class is not present add a transition effect
+  // to the narrative graphic on desktop and strapline on mobile
+  // --------------------------------------------------
+  html:not(.disable-animation) & {
+    &__slider,
+    &__strapline-header-inner {
+      .transition(transform 400ms ease-in-out);
     }
   }
 }
