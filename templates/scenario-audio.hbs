@@ -1,4 +1,4 @@
-<div class="scenario-audio-inner component__inner">
+<div class="scenario-audio__inner component__inner">
 
   {{> component this}}
 
@@ -7,8 +7,10 @@
     {{#unless _textBelowImage}}
     <div class="scenario-audio__content">
       <div class="scenario-audio__content-inner">
+
         {{#each _items}}
-        <div class="scenario-audio-content__item {{#if _isVisited}}is-visited{{/if}}" data-index="{{@index}}">
+        <div class="scenario-audio__content-item {{#if _isVisited}}is-visited{{/if}}" data-index="{{@index}}">
+
           {{#if title}}
           <div class="scenario-audio__content-title">
             <div class="scenario-audio__content-title-inner" {{a11y_attrs_heading 'componentItem'}}>
@@ -16,12 +18,17 @@
             </div>
           </div>
           {{/if}}
+
           {{#if _graphic.alt}}{{{a11y_aria_label _graphic.alt}}}{{/if}}
+
+          {{#if body}}
           <div class="scenario-audio__content-body">
             <div class="scenario-audio__content-body-inner">
               {{{compile body}}}
             </div>
           </div>
+          {{/if}}
+
           {{#if instruction}}
           <div class="scenario-audio__content-instruction">
             <div class="scenario-audio__content-instruction-inner">
@@ -29,18 +36,21 @@
             </div>
           </div>
           {{/if}}
+
         </div>
         {{/each}}
+
       </div>
     </div>
     {{/unless}}
 
     <div class="scenario-audio__strapline">
+
       <div class="scenario-audio__strapline-header">
         <div class="scenario-audio__strapline-header-inner u-clearfix" style="width: {{_totalWidth}}%">
 
           {{#each _items}}
-          <button class="scenario-audio__strapline-btn js-strapline-controls{{#if _isVisited}} is-visited{{/if}}" aria-label="{{{strapline}}}" style="width: {{../_itemWidth}}%" data-index="{{@index}}">
+          <button class="scenario-audio__strapline-btn js-scenario-audio-strapline-open-popup{{#if _isVisited}} is-visited{{/if}}" aria-label="{{{strapline}}}" style="width: {{../_itemWidth}}%" data-index="{{@index}}">
 
             <div class="scenario-audio__strapline-title">
               <div class="scenario-audio__strapline-title-inner">
@@ -62,26 +72,37 @@
     </div>
 
     <div class="scenario-audio__slide-container">
-      <button class="btn-icon scenario-audio__controls js-scenario-controls scenario-audio__control-left" aria-label="{{_globals._accessibility._ariaLabels.previous}}">
+
+      <button data-direction="left" class="btn-icon scenario-audio__controls scenario-audio__controls-left js-scenario-audio-controls-click" aria-label="{{_globals._accessibility._ariaLabels.previous}}">
         <div class="icon icon-controls-left"></div>
       </button>
-      <button class="btn-icon scenario-audio__controls js-scenario-controls scenario-audio__control-right" aria-label="{{_globals._accessibility._ariaLabels.next}}">
+
+      <button data-direction="right" class="btn-icon scenario-audio__controls scenario-audio__controls-right js-scenario-audio-controls-click" aria-label="{{_globals._accessibility._ariaLabels.next}}">
         <div class="icon icon-controls-right"></div>
       </button>
+
       <div class="scenario-audio__slider u-clearfix" style="width: {{_totalWidth}}%">
+
         {{#each _items}}
-        <div class="scenario-audio__slider-graphic {{#if visited}}is-visited{{/if}}" style="width: {{../_itemWidth}}%" data-index="{{@index}}">
-          <img src="{{_graphic.src}}" aria-hidden="true" />
+        <div class="scenario-audio__slider-image-container{{#if _isVisited}} is-visited{{/if}}" style="width: {{../_itemWidth}}%" data-index="{{@index}}">
+
+          <img class="scenario-audio__slider-image" src="{{_graphic.src}}" aria-hidden="true">
+
         </div>
+
         {{/each}}
+
       </div>
+
     </div>
 
     {{#if _textBelowImage}}
     <div class="scenario-audio__content">
       <div class="scenario-audio__content-inner">
+
         {{#each _items}}
-        <div class="scenario-audio-content__item{{#if _isVisited}} is-visited{{/if}}" data-index="{{@index}}">
+        <div class="scenario-audio__content-item{{#if _isVisited}} is-visited{{/if}}" data-index="{{@index}}">
+
           {{#if title}}
           <div class="scenario-audio__content-title">
             <div class="scenario-audio__content-title-inner" {{a11y_attrs_heading 'componentItem'}}>
@@ -89,12 +110,15 @@
             </div>
           </div>
           {{/if}}
+
           {{#if _graphic.alt}}{{{a11y_aria_label _graphic.alt}}}{{/if}}
+
           <div class="scenario-audio__content-body">
             <div class="scenario-audio__content-body-inner">
               {{{compile body}}}
             </div>
           </div>
+
           {{#if instruction}}
           <div class="scenario-audio__content-instruction">
             <div class="scenario-audio__content-instruction-inner">
@@ -102,16 +126,20 @@
             </div>
           </div>
           {{/if}}
+
         </div>
         {{/each}}
+
       </div>
     </div>
     {{/if}}
 
-    <div class="scenario-audio__indicators">
+    <div class="scenario-audio__indicators scenario-audio__slide-indicators">
+
       {{#each _items}}
-      <div class="scenario-audio__progress js-indicator-controls{{#if _isVisited}} is-visited{{/if}}" data-index="{{@index}}"></div>
+      <div class="scenario-audio__progress js-scenario-audio-progress-click{{#if _isVisited}} is-visited{{/if}}" data-index="{{@index}}"></div>
       {{/each}}
+
     </div>
 
     <div class="u-clearfix"></div>

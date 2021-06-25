@@ -3,19 +3,24 @@ define([
   'core/js/views/componentView',
   './modeEnum'
 ], function(Adapt, ComponentView, MODE) {
-  'use strict';
 
-  var ScenarioAudioView = ComponentView.extend({
+  class ScenarioAudioView extends ComponentView {
 
-    _isInitial: true,
+    events() {
+      return {
+        'click .js-scenario-audio-strapline-open-popup': 'openPopup',
+        'click .js-scenario-audio-controls-click': 'onNavigationClicked',
+        'click .js-scenario-audio-progress-click': 'onProgressClicked'
+      };
+    }
 
-    events: {
-      'click .js-strapline-controls': 'openPopup',
-      'click .js-scenario-controls': 'onNavigationClicked',
-      'click .js-indicator-controls': 'onProgressClicked'
-    },
+    initialize(...args) {
+      super.initialize(...args);
 
-    preRender: function() {
+      this._isInitial = true;
+    }
+
+    preRender() {
       this.listenTo(Adapt, {
         'device:changed device:resize': this.reRender,
         'notify:closed': this.closeNotify
@@ -32,69 +37,82 @@ define([
 
       this.checkIfResetOnRevisit();
       this.calculateWidths();
-    },
+    }
 
-    onItemsActiveChange: function(item, _isActive) {
-      if (_isActive === true) {
-        this.setStage(item);
+    onItemsActiveChange(item, _isActive) {
+      if (!_isActive) return;
+      this.setStage(item);
+      this.setFocus(item.get('_index'));
+    }
+
+    setFocus(itemIndex) {
+      if (this._isInitial) return;
+      const $straplineHeaderElm = this.$('.scenario-audio__strapline-header-inner');
+      const hasStraplineTransition = !this.isLargeMode() && ($straplineHeaderElm.css('transitionDuration') !== '0s');
+      if (hasStraplineTransition) {
+        $straplineHeaderElm.one('transitionend', () => {
+          this.focusOnScenarioElement(itemIndex);
+        });
+        return;
       }
-    },
 
-    onItemsVisitedChange: function(item, isVisited) {
-      if (!isVisited) return;
-      this.$('[data-index="' + item.get('_index') + '"]').addClass('is-visited');
-    },
+      this.focusOnScenarioElement(itemIndex);
+    }
 
-    calculateMode: function() {
-      var mode = Adapt.device.screenSize === 'large' ?
-        MODE.LARGE :
-        MODE.SMALL;
+    focusOnScenarioElement(itemIndex) {
+      const dataIndexAttr = `[data-index='${itemIndex}']`;
+      const $elementToFocus = this.isLargeMode() ?
+        this.$(`.scenario-audio__content-item${dataIndexAttr}`) :
+        this.$(`.scenario-audio__strapline-btn${dataIndexAttr}`);
+      Adapt.a11y.focusFirst($elementToFocus);
+    }
+
+    onItemsVisitedChange(item, _isVisited) {
+      if (!_isVisited) return;
+      this.$(`[data-index="${item.get('_index')}"]`).addClass('is-visited');
+    }
+
+    calculateMode() {
+      const mode = Adapt.device.screenSize === 'large' ? MODE.LARGE : MODE.SMALL;
       this.model.set('_mode', mode);
-    },
+    }
 
-    renderMode: function() {
+    renderMode() {
       this.calculateMode();
-      if (this.isLargeMode()) {
-        this.$el.addClass('mode-large').removeClass('mode-small');
 
-        if (this.model.get('instruction') == "") {
-          this.$el.addClass('remove-instruction');
-        }
-      } else {
-        this.$el.addClass('mode-small').removeClass('mode-large');
-        this.$el.removeClass('remove-instruction');
-      }
-    },
+      const isLargeMode = this.isLargeMode();
+      this.$el.toggleClass('mode-large', isLargeMode).toggleClass('mode-small', !isLargeMode);
+    }
 
-    isLargeMode: function() {
+    isLargeMode() {
       return this.model.get('_mode') === MODE.LARGE;
-    },
+    }
 
-    postRender: function() {
+    postRender() {
       this.renderMode();
-      this.setupScenarioAudio();
+      this.setupScenario();
 
       this.$('.scenario-audio__slider').imageready(this.setReadyStatus.bind(this));
 
       if (Adapt.config.get('_disableAnimation')) {
         this.$el.addClass('disable-animation');
       }
-    },
+    }
 
-    checkIfResetOnRevisit: function() {
-      var isResetOnRevisit = this.model.get('_isResetOnRevisit');
+    checkIfResetOnRevisit() {
+      const isResetOnRevisit = this.model.get('_isResetOnRevisit');
       // If reset is enabled set defaults
       if (isResetOnRevisit) {
         this.model.reset(isResetOnRevisit);
       }
-    },
+    }
 
-    setupScenarioAudio: function() {
+    setupScenario() {
       this.renderMode();
-      var items = this.model.getChildren();
+      const items = this.model.getChildren();
       if (!items || !items.length) return;
 
-      var activeItem = this.model.getActiveItem();
+      let activeItem = this.model.getActiveItem();
       if (!activeItem) {
         activeItem = this.model.getItem(0);
         activeItem.toggleActive(true);
@@ -114,119 +132,132 @@ define([
       if (Adapt.audio && this.model.get('_audio') && this.model.get('_audio')._reducedTextisEnabled) {
         this.replaceText(Adapt.audio.textSize);
       }
-    },
+    }
 
-    calculateWidths: function() {
-      var itemCount = this.model.getChildren().length;
+    calculateWidths() {
+      const itemCount = this.model.getChildren().length;
       this.model.set({
-        '_totalWidth': 100 * itemCount,
-        '_itemWidth': 100 / itemCount
+        _totalWidth: 100 * itemCount,
+        _itemWidth: 100 / itemCount
       });
-    },
+    }
 
-    resizeControl: function() {
-      var previousMode = this.model.get('_mode');
+    resizeControl() {
+      const previousMode = this.model.get('_mode');
       this.renderMode();
       if (previousMode !== this.model.get('_mode')) this.replaceInstructions();
       this.evaluateNavigation();
-      var activeItem = this.model.getActiveItem();
+      const activeItem = this.model.getActiveItem();
       if (activeItem) this.setStage(activeItem);
-    },
+    }
 
-    reRender: function() {
+    reRender() {
       this.resizeControl();
-    },
+    }
 
-    closeNotify: function() {
+    closeNotify() {
       this.evaluateCompletion()
-    },
+    }
 
-    replaceInstructions: function() {
+    replaceInstructions() {
       if (this.isLargeMode()) {
-        this.$('.scenario-audio-instruction-inner').html(this.model.get('instruction'));
+        this.$('.scenario-audio__instruction-inner').html(this.model.get('instruction'));
       } else if (this.model.get('mobileInstruction')) {
-        this.$('.scenario-audio-instruction-inner').html(this.model.get('mobileInstruction'));
+        this.$('.scenario-audio__instruction-inner').html(this.model.get('mobileInstruction'));
       }
-    },
+    }
 
-    moveSliderToIndex: function(itemIndex) {
-      var offset = this.model.get('_itemWidth') * itemIndex;
+    moveSliderToIndex(itemIndex) {
+      let offset = this.model.get('_itemWidth') * itemIndex;
       if (Adapt.config.get('_defaultDirection') === 'ltr') {
         offset *= -1;
       }
-      var cssValue = 'translateX(' + offset + '%)';
-      var $sliderElm = this.$('.scenario-audio__slider');
-      var $straplineHeaderElm = this.$('.scenario-audio__strapline-header-inner');
+      const cssValue = `translateX(${offset}%)`;
+      const $sliderElm = this.$('.scenario-audio__slider');
+      const $straplineHeaderElm = this.$('.scenario-audio__strapline-header-inner');
 
       $sliderElm.css('transform', cssValue);
       $straplineHeaderElm.css('transform', cssValue);
+    }
 
-      if (Adapt.config.get('_disableAnimation') || this._isInitial) {
-        this.onTransitionEnd();
-      } else {
-        $sliderElm.one('transitionend', this.onTransitionEnd.bind(this));
-      }
-    },
+    setStage(item) {
+      const index = item.get('_index');
+      const indexSelector = `[data-index="${index}"]`;
 
-    onTransitionEnd: function() {
-      if (this._isInitial) return;
-
-      var index = this.model.getActiveItem().get('_index');
-      if (this.isLargeMode()) {
-        Adapt.a11y.focusFirst(this.$('.scenario-audio-content__item[data-index="' + index + '"]'));
-      } else {
-        Adapt.a11y.focusFirst(this.$('.scenario-audio__strapline-title'));
-      }
-    },
-
-    setStage: function(item) {
-      var index = item.get('_index');
       if (this.isLargeMode()) {
         // Set the visited attribute for large screen devices
         item.toggleVisited(true);
       }
 
-      var $slideGraphics = this.$('.scenario-audio__slider-graphic');
-      var $contentItem = this.$('.scenario-audio-content__item');
-      var $straplineTitle = this.$('.scenario-audio__strapline-title');
-      this.$('.scenario-audio__progress:visible').removeClass('is-selected').filter('[data-index="' + index + '"]').addClass('is-selected');
+      this.$('.scenario-audio__progress').removeClass('is-selected').filter(indexSelector).addClass('is-selected');
+
+      const $slideGraphics = this.$('.scenario-audio__slider-image-container');
       Adapt.a11y.toggleAccessibleEnabled($slideGraphics.children('.controls'), false);
-      Adapt.a11y.toggleAccessibleEnabled($slideGraphics.filter('[data-index="' + index + '"]').children('.controls'), true);
-      $contentItem.addClass('scenario-audio__hidden').filter('[data-index="' + index + '"]').removeClass('scenario-audio__hidden');
-      Adapt.a11y.toggleAccessibleEnabled($contentItem, false);
-      Adapt.a11y.toggleAccessibleEnabled($contentItem.filter('[data-index="' + index + '"]'), true);
-      Adapt.a11y.toggleAccessibleEnabled($straplineTitle, false);
-      Adapt.a11y.toggleAccessibleEnabled($straplineTitle.filter('[data-index="' + index + '"]'), true);
+      Adapt.a11y.toggleAccessibleEnabled($slideGraphics.filter(indexSelector).children('.controls'), true);
+
+      const $scenarioItems = this.$('.scenario-audio__content-item');
+      $scenarioItems.addClass('u-visibility-hidden u-display-none');
+      Adapt.a11y.toggleAccessible($scenarioItems, false);
+      Adapt.a11y.toggleAccessible($scenarioItems.filter(indexSelector).removeClass('u-visibility-hidden u-display-none'), true);
+
+      const $scenarioStraplineButtons = this.$('.scenario-audio__strapline-btn');
+      Adapt.a11y.toggleAccessibleEnabled($scenarioStraplineButtons, false);
+      Adapt.a11y.toggleAccessibleEnabled($scenarioStraplineButtons.filter(indexSelector), true);
 
       this.evaluateNavigation();
       this.evaluateCompletion();
       this.moveSliderToIndex(index);
-    },
+    }
 
-    evaluateNavigation: function() {
-      var active = this.model.getActiveItem();
+    evaluateNavigation() {
+      const active = this.model.getActiveItem();
       if (!active) return;
 
-      var currentStage = active.get('_index');
-      var itemCount = this.model.getChildren().length;
+      const index = active.get('_index');
+      const itemCount = this.model.getChildren().length;
 
-      var isAtStart = currentStage === 0;
-      var isAtEnd = currentStage === itemCount - 1;
+      const isAtStart = index === 0;
+      const isAtEnd = index === itemCount - 1;
 
-      this.$('.scenario-audio__control-left').toggleClass('scenario-audio__hidden', isAtStart);
-      this.$('.scenario-audio__control-right').toggleClass('scenario-audio__hidden', isAtEnd);
-    },
+      const $left = this.$('.scenario-audio__controls-left');
+      const $right = this.$('.scenario-audio__controls-right');
 
-    evaluateCompletion: function() {
+      const globals = Adapt.course.get('_globals');
+
+      const ariaLabelsGlobals = globals._accessibility._ariaLabels;
+      //const scenarioGlobals = globals._components._scenario-audio;
+
+      const ariaLabelPrevious = ariaLabelsGlobals.previous;
+      const ariaLabelNext = ariaLabelsGlobals.next;
+
+      const prevTitle = isAtStart ? '' : this.model.getItem(index - 1).get('title');
+      const nextTitle = isAtEnd ? '' : this.model.getItem(index + 1).get('title');
+
+      $left.toggleClass('u-visibility-hidden', isAtStart);
+      $right.toggleClass('u-visibility-hidden', isAtEnd);
+
+      $left.attr('aria-label', Handlebars.compile(ariaLabelPrevious)({
+        title: prevTitle,
+        _globals: globals,
+        itemNumber: isAtStart ? null : index,
+        totalItems: itemCount
+      }));
+      $right.attr('aria-label', Handlebars.compile(ariaLabelNext)({
+        title: nextTitle,
+        _globals: globals,
+        itemNumber: isAtEnd ? null : index + 2,
+        totalItems: itemCount
+      }));
+    }
+
+    evaluateCompletion() {
       if (this.model.areAllItemsCompleted()) {
         this.trigger('allItems');
       }
-    },
+    }
 
-    openPopup: function(event) {
-      event && event.preventDefault();
-
-      var currentItem = this.model.getActiveItem();
+    openPopup() {
+      const currentItem = this.model.getActiveItem();
 
       // Set popup text to default full size
       var itemTitle = currentItem.get('title');
@@ -254,16 +285,13 @@ define([
         Adapt.audio.audioClip[this.model.get('_audio')._channel].onscreenID = "";
         Adapt.trigger('audio:playAudio', currentItem.get('_audio').src, this.model.get('_id'), this.model.get('_audio')._channel);
       }
-    },
+    }
 
-    onNavigationClicked: function(event) {
-      var stage = this.model.getActiveItem().get('_index');
-
-      if ($(event.currentTarget).hasClass('scenario-audio__control-right')) {
-        this.model.setActiveItem(++stage);
-      } else if ($(event.currentTarget).hasClass('scenario-audio__control-left')) {
-        this.model.setActiveItem(--stage);
-      }
+    onNavigationClicked(event) {
+      const $btn = $(event.currentTarget);
+      let index = this.model.getActiveItem().get('_index');
+      $btn.data('direction') === 'right' ? index++ : index--;
+      this.model.setActiveItem(index);
 
       if (!Adapt.audio) return;
       if (Adapt.device.screenSize === 'large') {
@@ -274,22 +302,21 @@ define([
           Adapt.trigger('audio:playAudio', currentItem.get('_audio').src, this.model.get('_id'), this.model.get('_audio')._channel);
         }
       }
-    },
+    }
 
-    onProgressClicked: function(event) {
-      event && event.preventDefault();
-      var clickedIndex = $(event.target).data('index');
-      this.model.setActiveItem(clickedIndex);
-    },
+    onProgressClicked(event) {
+      const index = $(event.target).data('index');
+      this.model.setActiveItem(index);
+    }
 
-    setupEventListeners: function() {
+    setupEventListeners() {
       if (this.model.get('_setCompletionOn') === 'inview') {
         this.setupInviewCompletion('.component__widget');
       }
-    },
+    }
 
     // Reduced text
-    replaceText: function(value) {
+    replaceText(value) {
       // If enabled
       if (this.model.get('_audio') && this.model.get('_audio')._reducedTextisEnabled) {
         // Change each items title and body
@@ -304,8 +331,9 @@ define([
         }
       }
     }
+  }
 
-  });
+  ScenarioAudioView.template = 'scenario-audio';
 
   return ScenarioAudioView;
 

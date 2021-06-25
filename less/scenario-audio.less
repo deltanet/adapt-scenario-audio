@@ -1,25 +1,4 @@
-.mode-large.scenario-audio {
-  .scenario-audio__strapline {
-    display: none;
-  }
-
-  .scenario-audio__content-item.scenario-audio__hidden {
-    display: none;
-  }
-
-  &.remove-instruction {
-    .component__instruction {
-      display: none;
-    }
-  }
-}
-
 .scenario-audio {
-  &__widget {
-    background: @font-color-inverted;
-    margin-top: 0;
-  }
-
   &__content {
     width: 100%;
     background: @font-color-inverted;
@@ -30,100 +9,19 @@
     padding: @component-body-margin;
   }
 
-  &.mode-small .scenario-audio__content {
-    display: none;
-  }
-
   &__content-instruction {
-    .instruction-text;
     margin-top: @component-instruction-margin;
+    .instruction-text;
 
     instr {
       color: @btn-color;
     }
   }
 
-  &__content-title {
-    .item-title;
-    margin-bottom: @component-title-margin;
-  }
-
-  &__slide-container {
-    width: 100%;
-    position: relative;
-    overflow-x: hidden;
-  }
-
-  &__slider-graphic {
-    position: relative;
-    float: left;
-
-    .dir-rtl & {
-      float: right;
-    }
-
-    img {
-      display: block;
-    }
-  }
-
-  &__indicators {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    width: 100%;
-  }
-
-  &__progress {
-    width: @icon-size / 2;
-    height: @icon-size / 2;
-    margin: 0.25rem;
-    cursor: pointer;
-    background-color: @item-color;
-  }
-
-  &__progress.is-selected {
-    background-color: @item-color-selected;
-  }
-
-  &__controls {
-    position: absolute;
-    top: 50%;
-    z-index: 10;
-    .transform(translateY(-50%));
-
-    background-color: @item-color;
-    color: @item-color-inverted;
-
-    .no-touch &:hover {
-      background-color: @item-color-hover;
-      color: @item-color-inverted-hover;
-      .transition(background-color @duration ease-in, color @duration ease-in;);
-    }
-
-    &.scenario-audio__hidden {
-      visibility: hidden;
-    }
-  }
-
-  &__control-left {
-    left: 0;
-
-    .dir-rtl & {
-      left: inherit;
-      right: 0;
-    }
-  }
-
-  &__control-right {
-    right: 0;
-
-    .dir-rtl & {
-      right: inherit;
-      left: 0;
-    }
-  }
-
+  // --------------------------------------------------
+  // Strapline
+  // Clickable element on mobile, opens notify
+  // --------------------------------------------------
   &__strapline {
     position: relative;
 
@@ -133,8 +31,8 @@
   }
 
   &__strapline-header {
-    overflow: hidden;
     position: relative;
+    overflow: hidden;
   }
 
   &__strapline-btn {
@@ -188,13 +86,70 @@
     .icon-plus;
   }
 
-
-  &__hidden {
-    //visibility: hidden;
-    display: none;
+  // Graphic
+  // --------------------------------------------------
+  &__slide-container {
+    position: relative;
+    width: 100%;
+    overflow-x: hidden;
   }
 
+  &__slider-image-container {
+    .u-float-left;
+  }
+
+  // Button controls
   // --------------------------------------------------
+  &__controls-container {
+    position: relative;
+  }
+
+  &__controls {
+    position: absolute;
+    top: 50%;
+    z-index: 10;
+    .transform(translateY(-50%));
+  }
+
+  &__controls-left {
+    left: 0;
+
+    .dir-rtl & {
+      left: inherit;
+      right: 0;
+    }
+  }
+
+  &__controls-right {
+    right: 0;
+
+    .dir-rtl & {
+      right: inherit;
+      left: 0;
+    }
+  }
+
+  // Progress indicators
+  // --------------------------------------------------
+  &__indicators {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+  }
+
+  &__progress {
+    height: @icon-size / 2;
+    width: @icon-size / 2;
+    margin: 0.25rem;
+    cursor: pointer;
+    background-color: @background;
+  }
+
+  &__progress.is-selected {
+    background-color: lighten(@background, 10%);
+  }
+
   // When the disable animation class is not present add a transition effect
   // to the narrative graphic on desktop and strapline on mobile
   // --------------------------------------------------
