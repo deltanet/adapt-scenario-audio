@@ -1,307 +1,340 @@
 define([
-    'core/js/adapt',
-    'core/js/views/componentView',
-    './modeEnum'
+  'core/js/adapt',
+  'core/js/views/componentView',
+  './modeEnum'
 ], function(Adapt, ComponentView, MODE) {
-    'use strict';
 
-    var ScenarioAudioView = ComponentView.extend({
+  class ScenarioAudioView extends ComponentView {
 
-        _isInitial: true,
+    events() {
+      return {
+        'click .js-scenario-audio-strapline-open-popup': 'openPopup',
+        'click .js-scenario-audio-controls-click': 'onNavigationClicked',
+        'click .js-scenario-audio-progress-click': 'onProgressClicked'
+      };
+    }
 
-        events: {
-            'click .scenario-audio-strapline-title': 'openPopup',
-            'click .scenario-audio-controls': 'onNavigationClicked',
-            'click .scenario-audio-indicators .scenario-audio-progress': 'onProgressClicked'
-        },
+    initialize(...args) {
+      super.initialize(...args);
 
-        preRender: function() {
-          this.listenTo(Adapt, {
-              'device:changed device:resize': this.reRender,
-              'notify:closed': this.closeNotify
-          });
-          this.renderMode();
+      this._isInitial = true;
+    }
 
-          this.listenTo(this.model.get('_children'), {
-              'change:_isActive': this.onItemsActiveChange,
-              'change:_isVisited': this.onItemsVisitedChange
-          });
+    preRender() {
+      this.listenTo(Adapt, {
+        'device:changed device:resize': this.reRender,
+        'notify:closed': this.closeNotify
+      });
+      this.renderMode();
 
-          // Listen for text change on audio extension
-          this.listenTo(Adapt, "audio:changeText", this.replaceText);
+      this.listenTo(this.model.getChildren(), {
+        'change:_isActive': this.onItemsActiveChange,
+        'change:_isVisited': this.onItemsVisitedChange
+      });
 
-          this.checkIfResetOnRevisit();
-          this.calculateWidths();
-        },
+      // Listen for text change on audio extension
+      this.listenTo(Adapt, "audio:changeText", this.replaceText);
 
-        onItemsActiveChange: function(item, _isActive) {
-            if (_isActive === true) {
-                this.setStage(item);
-            }
-        },
+      this.checkIfResetOnRevisit();
+      this.calculateWidths();
+    }
 
-        onItemsVisitedChange: function(item, isVisited) {
-            if (!isVisited) return;
-            this.$('[data-index="' + item.get('_index') + '"]').addClass('visited');
-        },
+    onItemsActiveChange(item, _isActive) {
+      if (!_isActive) return;
+      this.setStage(item);
+      this.setFocus(item.get('_index'));
+    }
 
-        calculateMode: function() {
-            var mode = Adapt.device.screenSize === 'large' ?
-                MODE.LARGE :
-                MODE.SMALL;
-            this.model.set('_mode', mode);
-        },
+    setFocus(itemIndex) {
+      if (this._isInitial) return;
+      const $straplineHeaderElm = this.$('.scenario-audio__strapline-header-inner');
+      const hasStraplineTransition = !this.isLargeMode() && ($straplineHeaderElm.css('transitionDuration') !== '0s');
+      if (hasStraplineTransition) {
+        $straplineHeaderElm.one('transitionend', () => {
+          this.focusOnScenarioElement(itemIndex);
+        });
+        return;
+      }
 
-        renderMode: function() {
-            this.calculateMode();
-            if (this.isLargeMode()) {
-                this.$el.addClass('mode-large').removeClass('mode-small');
+      this.focusOnScenarioElement(itemIndex);
+    }
 
-                if (this.model.get('instruction') == "") {
-                  this.$el.addClass('remove-instruction');
-                }
-            } else {
-                this.$el.addClass('mode-small').removeClass('mode-large');
-                this.$el.removeClass('remove-instruction');
-            }
-        },
+    focusOnScenarioElement(itemIndex) {
+      const dataIndexAttr = `[data-index='${itemIndex}']`;
+      const $elementToFocus = this.isLargeMode() ?
+        this.$(`.scenario-audio__content-item${dataIndexAttr}`) :
+        this.$(`.scenario-audio__strapline-btn${dataIndexAttr}`);
+      Adapt.a11y.focusFirst($elementToFocus);
+    }
 
-        isLargeMode: function() {
-            return this.model.get('_mode') === MODE.LARGE;
-        },
+    onItemsVisitedChange(item, _isVisited) {
+      if (!_isVisited) return;
+      this.$(`[data-index="${item.get('_index')}"]`).addClass('is-visited');
+    }
 
-        postRender: function() {
-            this.renderMode();
-            this.setupScenarioAudio();
+    calculateMode() {
+      const mode = Adapt.device.screenSize === 'large' ? MODE.LARGE : MODE.SMALL;
+      this.model.set('_mode', mode);
+    }
 
-            this.$('.scenario-audio-slider').imageready(this.setReadyStatus.bind(this));
+    renderMode() {
+      this.calculateMode();
 
-            if (Adapt.config.get('_disableAnimation')) {
-                this.$el.addClass('disable-animation');
-            }
-        },
+      const isLargeMode = this.isLargeMode();
+      this.$el.toggleClass('mode-large', isLargeMode).toggleClass('mode-small', !isLargeMode);
+    }
 
-        checkIfResetOnRevisit: function() {
-            var isResetOnRevisit = this.model.get('_isResetOnRevisit');
-            // If reset is enabled set defaults
-            if (isResetOnRevisit) {
-                this.model.reset(isResetOnRevisit);
-            }
-        },
+    isLargeMode() {
+      return this.model.get('_mode') === MODE.LARGE;
+    }
 
-        setupScenarioAudio: function() {
-            this.renderMode();
-            var items = this.model.get('_children');
-            if (!items || !items.length) return;
+    postRender() {
+      this.renderMode();
+      this.setupScenario();
 
-            var activeItem = this.model.getActiveItem();
-            if (!activeItem) {
-                activeItem = this.model.getItem(0);
-                activeItem.toggleActive(true);
-            } else {
-                // manually trigger change as it is not fired on reentry
-                items.trigger('change:_isActive', activeItem, true);
-            }
+      this.$('.scenario-audio__slider').imageready(this.setReadyStatus.bind(this));
 
-            this.calculateWidths();
+      if (Adapt.config.get('_disableAnimation')) {
+        this.$el.addClass('disable-animation');
+      }
+    }
 
-            if (!this.isLargeMode()) {
-                this.replaceInstructions();
-            }
-            this.setupEventListeners();
-            this._isInitial = false;
+    checkIfResetOnRevisit() {
+      const isResetOnRevisit = this.model.get('_isResetOnRevisit');
+      // If reset is enabled set defaults
+      if (isResetOnRevisit) {
+        this.model.reset(isResetOnRevisit);
+      }
+    }
 
-            if (Adapt.audio && this.model.get('_audio') && this.model.get('_audio')._reducedTextisEnabled) {
-                this.replaceText(Adapt.audio.textSize);
-            }
-        },
+    setupScenario() {
+      this.renderMode();
+      const items = this.model.getChildren();
+      if (!items || !items.length) return;
 
-        calculateWidths: function() {
-            var itemCount = this.model.get('_children').length;
-            this.model.set({
-                '_totalWidth': 100 * itemCount,
-                '_itemWidth': 100 / itemCount
-            });
-        },
+      let activeItem = this.model.getActiveItem();
+      if (!activeItem) {
+        activeItem = this.model.getItem(0);
+        activeItem.toggleActive(true);
+      } else {
+        // manually trigger change as it is not fired on reentry
+        items.trigger('change:_isActive', activeItem, true);
+      }
 
-        resizeControl: function() {
-            var previousMode = this.model.get('_mode');
-            this.renderMode();
-            if (previousMode !== this.model.get('_mode')) this.replaceInstructions();
-            this.evaluateNavigation();
-            var activeItem = this.model.getActiveItem();
-            if (activeItem) this.setStage(activeItem);
-        },
+      this.calculateWidths();
 
-        reRender: function() {
-            this.resizeControl();
-        },
+      if (!this.isLargeMode()) {
+        this.replaceInstructions();
+      }
+      this.setupEventListeners();
+      this._isInitial = false;
 
-        closeNotify: function() {
-            this.evaluateCompletion()
-        },
+      if (Adapt.audio && this.model.get('_audio') && this.model.get('_audio')._reducedTextisEnabled) {
+        this.replaceText(Adapt.audio.textSize);
+      }
+    }
 
-        replaceInstructions: function() {
-            if (this.isLargeMode()) {
-                this.$('.scenario-audio-instruction-inner').html(this.model.get('instruction'));
-            } else if (this.model.get('mobileInstruction')) {
-                this.$('.scenario-audio-instruction-inner').html(this.model.get('mobileInstruction'));
-            }
-        },
+    calculateWidths() {
+      const itemCount = this.model.getChildren().length;
+      this.model.set({
+        _totalWidth: 100 * itemCount,
+        _itemWidth: 100 / itemCount
+      });
+    }
 
-        moveSliderToIndex: function(itemIndex) {
-            var offset = this.model.get('_itemWidth') * itemIndex;
-            if (Adapt.config.get('_defaultDirection') === 'ltr') {
-                offset *= -1;
-            }
-            var cssValue = 'translateX('+offset+'%)';
-            var $sliderElm = this.$('.scenario-audio-slider');
-            var $straplineHeaderElm = this.$('.scenario-audio-strapline-header-inner');
+    resizeControl() {
+      const previousMode = this.model.get('_mode');
+      this.renderMode();
+      if (previousMode !== this.model.get('_mode')) this.replaceInstructions();
+      this.evaluateNavigation();
+      const activeItem = this.model.getActiveItem();
+      if (activeItem) this.setStage(activeItem);
+    }
 
-            $sliderElm.css('transform', cssValue);
-            $straplineHeaderElm.css('transform', cssValue);
+    reRender() {
+      this.resizeControl();
+    }
 
-            if (Adapt.config.get('_disableAnimation') || this._isInitial) {
-                this.onTransitionEnd();
-            } else {
-                $sliderElm.one('transitionend', this.onTransitionEnd.bind(this));
-            }
-        },
+    closeNotify() {
+      this.evaluateCompletion()
+    }
 
-        onTransitionEnd: function() {
-            if (this._isInitial) return;
+    replaceInstructions() {
+      if (this.isLargeMode()) {
+        this.$('.scenario-audio__instruction-inner').html(this.model.get('instruction'));
+      } else if (this.model.get('mobileInstruction')) {
+        this.$('.scenario-audio__instruction-inner').html(this.model.get('mobileInstruction'));
+      }
+    }
 
-            var index = this.model.getActiveItem().get('_index');
-            if (this.isLargeMode()) {
-                this.$('.scenario-audio-content-item[data-index="'+index+'"]').a11y_focus();
-            } else {
-                this.$('.scenario-audio-strapline-title').a11y_focus();
-            }
-        },
+    moveSliderToIndex(itemIndex) {
+      let offset = this.model.get('_itemWidth') * itemIndex;
+      if (Adapt.config.get('_defaultDirection') === 'ltr') {
+        offset *= -1;
+      }
+      const cssValue = `translateX(${offset}%)`;
+      const $sliderElm = this.$('.scenario-audio__slider');
+      const $straplineHeaderElm = this.$('.scenario-audio__strapline-header-inner');
 
-        setStage: function(item) {
-            var index = item.get('_index');
-            if (this.isLargeMode()) {
-                // Set the visited attribute for large screen devices
-                item.toggleVisited(true);
-            }
+      $sliderElm.css('transform', cssValue);
+      $straplineHeaderElm.css('transform', cssValue);
+    }
 
-            var $slideGraphics = this.$('.scenario-audio-slider-graphic');
-            this.$('.scenario-audio-progress:visible').removeClass('selected').filter('[data-index="'+index+'"]').addClass('selected');
-            $slideGraphics.children('.controls').a11y_cntrl_enabled(false);
-            $slideGraphics.filter('[data-index="'+index+'"]').children('.controls').a11y_cntrl_enabled(true);
-            this.$('.scenario-audio-content-item').addClass('scenario-audio-hidden').a11y_on(false).filter('[data-index="'+index+'"]').removeClass('scenario-audio-hidden').a11y_on(true);
-            this.$('.scenario-audio-strapline-title').a11y_cntrl_enabled(false).filter('[data-index="'+index+'"]').a11y_cntrl_enabled(true);
+    setStage(item) {
+      const index = item.get('_index');
+      const indexSelector = `[data-index="${index}"]`;
 
-            this.evaluateNavigation();
-            this.evaluateCompletion();
-            this.moveSliderToIndex(index);
-        },
+      if (this.isLargeMode()) {
+        // Set the visited attribute for large screen devices
+        item.toggleVisited(true);
+      }
 
-        evaluateNavigation: function() {
-            var active = this.model.getActiveItem();
-            if (!active) return;
+      this.$('.scenario-audio__progress').removeClass('is-selected').filter(indexSelector).addClass('is-selected');
 
-            var currentStage = active.get('_index');
-            var itemCount = this.model.get('_children').length;
+      const $slideGraphics = this.$('.scenario-audio__slider-image-container');
+      Adapt.a11y.toggleAccessibleEnabled($slideGraphics.children('.controls'), false);
+      Adapt.a11y.toggleAccessibleEnabled($slideGraphics.filter(indexSelector).children('.controls'), true);
 
-            var isAtStart = currentStage === 0;
-            var isAtEnd = currentStage === itemCount - 1;
+      const $scenarioItems = this.$('.scenario-audio__content-item');
+      $scenarioItems.addClass('u-visibility-hidden u-display-none');
+      Adapt.a11y.toggleAccessible($scenarioItems, false);
+      Adapt.a11y.toggleAccessible($scenarioItems.filter(indexSelector).removeClass('u-visibility-hidden u-display-none'), true);
 
-            this.$('.scenario-audio-control-left').toggleClass('scenario-audio-hidden', isAtStart);
-            this.$('.scenario-audio-control-right').toggleClass('scenario-audio-hidden', isAtEnd);
-        },
+      const $scenarioStraplineButtons = this.$('.scenario-audio__strapline-btn');
+      Adapt.a11y.toggleAccessibleEnabled($scenarioStraplineButtons, false);
+      Adapt.a11y.toggleAccessibleEnabled($scenarioStraplineButtons.filter(indexSelector), true);
 
-        evaluateCompletion: function() {
-            if (this.model.areAllItemsCompleted()) {
-                this.trigger('allItems');
-            }
-        },
+      this.evaluateNavigation();
+      this.evaluateCompletion();
+      this.moveSliderToIndex(index);
+    }
 
-        openPopup: function(event) {
-            event && event.preventDefault();
+    evaluateNavigation() {
+      const active = this.model.getActiveItem();
+      if (!active) return;
 
-            var currentItem = this.model.getActiveItem();
+      const index = active.get('_index');
+      const itemCount = this.model.getChildren().length;
 
-            // Set popup text to default full size
-            var itemTitle = currentItem.get('title');
-            var itemBody = currentItem.get('body');
+      const isAtStart = index === 0;
+      const isAtEnd = index === itemCount - 1;
 
-            // If reduced text is enabled and selected
-            if (Adapt.audio && this.model.get('_audio') && this.model.get('_audio')._reducedTextisEnabled && Adapt.audio.textSize == 1) {
-                itemTitle = currentItem.get('titleReduced');
-                itemBody = currentItem.get('bodyReduced');
-            }
+      const $left = this.$('.scenario-audio__controls-left');
+      const $right = this.$('.scenario-audio__controls-right');
 
-            Adapt.trigger('notify:popup', {
-                title: itemTitle,
-                body: itemBody
-            });
+      const globals = Adapt.course.get('_globals');
 
-            Adapt.on('popup:opened', function() {
-                // Set the visited attribute for small and medium screen devices
-                currentItem.toggleVisited(true);
-            });
+      const ariaLabelsGlobals = globals._accessibility._ariaLabels;
+      //const scenarioGlobals = globals._components._scenario-audio;
 
-            if(!Adapt.audio) return;
+      const ariaLabelPrevious = ariaLabelsGlobals.previous;
+      const ariaLabelNext = ariaLabelsGlobals.next;
 
-            if (this.model.has('_audio') && this.model.get('_audio')._isEnabled && Adapt.audio.audioClip[this.model.get('_audio')._channel].status == 1) {
-              Adapt.audio.audioClip[this.model.get('_audio')._channel].onscreenID = "";
-              Adapt.trigger('audio:playAudio', currentItem.get('_audio').src, this.model.get('_id'), this.model.get('_audio')._channel);
-            }
-        },
+      const prevTitle = isAtStart ? '' : this.model.getItem(index - 1).get('title');
+      const nextTitle = isAtEnd ? '' : this.model.getItem(index + 1).get('title');
 
-        onNavigationClicked: function(event) {
-            var stage = this.model.getActiveItem().get('_index');
+      $left.toggleClass('u-visibility-hidden', isAtStart);
+      $right.toggleClass('u-visibility-hidden', isAtEnd);
 
-            if ($(event.currentTarget).hasClass('scenario-audio-control-right')) {
-                this.model.setActiveItem(++stage);
-            } else if ($(event.currentTarget).hasClass('scenario-audio-control-left')) {
-                this.model.setActiveItem(--stage);
-            }
+      $left.attr('aria-label', Handlebars.compile(ariaLabelPrevious)({
+        title: prevTitle,
+        _globals: globals,
+        itemNumber: isAtStart ? null : index,
+        totalItems: itemCount
+      }));
+      $right.attr('aria-label', Handlebars.compile(ariaLabelNext)({
+        title: nextTitle,
+        _globals: globals,
+        itemNumber: isAtEnd ? null : index + 2,
+        totalItems: itemCount
+      }));
+    }
 
-            if (!Adapt.audio) return;
-            if (Adapt.device.screenSize === 'large') {
-                var currentItem = this.model.getActiveItem();
+    evaluateCompletion() {
+      if (this.model.areAllItemsCompleted()) {
+        this.trigger('allItems');
+      }
+    }
 
-                if (this.model.has('_audio') && this.model.get('_audio')._isEnabled && Adapt.audio.audioClip[this.model.get('_audio')._channel].status == 1) {
-                  Adapt.audio.audioClip[this.model.get('_audio')._channel].onscreenID = "";
-                  Adapt.trigger('audio:playAudio', currentItem.get('_audio').src, this.model.get('_id'), this.model.get('_audio')._channel);
-                }
-            }
-        },
+    openPopup() {
+      const currentItem = this.model.getActiveItem();
 
-        onProgressClicked: function(event) {
-            event && event.preventDefault();
-            var clickedIndex = $(event.target).data('index');
-            this.model.setActiveItem(clickedIndex);
-        },
+      // Set popup text to default full size
+      var itemTitle = currentItem.get('title');
+      var itemBody = currentItem.get('body');
 
-        setupEventListeners: function() {
-            if (this.model.get('_setCompletionOn') === 'inview') {
-                this.setupInviewCompletion('.component-widget');
-            }
-        },
+      // If reduced text is enabled and selected
+      if (Adapt.audio && this.model.get('_audio') && this.model.get('_audio')._reducedTextisEnabled && Adapt.audio.textSize == 1) {
+        itemTitle = currentItem.get('titleReduced');
+        itemBody = currentItem.get('bodyReduced');
+      }
 
-        // Reduced text
-        replaceText: function(value) {
-            // If enabled
-            if (this.model.get('_audio') && this.model.get('_audio')._reducedTextisEnabled) {
-                // Change each items title and body
-                for (var i = 0; i < this.model.get('_items').length; i++) {
-                    if(value == 0) {
-                        this.$('.scenario-audio-content-title-inner').eq(i).html(this.model.get('_items')[i].title);
-                        this.$('.scenario-audio-content-body-inner').eq(i).html(this.model.get('_items')[i].body);
-                    } else {
-                        this.$('.scenario-audio-content-title-inner').eq(i).html(this.model.get('_items')[i].titleReduced);
-                        this.$('.scenario-audio-content-body-inner').eq(i).html(this.model.get('_items')[i].bodyReduced);
-                    }
-                }
-            }
+      Adapt.notify.popup({
+        title: itemTitle,
+        body: itemBody
+      });
+
+      Adapt.on('popup:opened', function() {
+        // Set the visited attribute for small and medium screen devices
+        currentItem.toggleVisited(true);
+      });
+
+      if (!Adapt.audio) return;
+
+      if (this.model.has('_audio') && this.model.get('_audio')._isEnabled && Adapt.audio.audioClip[this.model.get('_audio')._channel].status == 1) {
+        Adapt.audio.audioClip[this.model.get('_audio')._channel].onscreenID = "";
+        Adapt.trigger('audio:playAudio', currentItem.get('_audio').src, this.model.get('_id'), this.model.get('_audio')._channel);
+      }
+    }
+
+    onNavigationClicked(event) {
+      const $btn = $(event.currentTarget);
+      let index = this.model.getActiveItem().get('_index');
+      $btn.data('direction') === 'right' ? index++ : index--;
+      this.model.setActiveItem(index);
+
+      if (!Adapt.audio) return;
+      if (Adapt.device.screenSize === 'large') {
+        var currentItem = this.model.getActiveItem();
+
+        if (this.model.has('_audio') && this.model.get('_audio')._isEnabled && Adapt.audio.audioClip[this.model.get('_audio')._channel].status == 1) {
+          Adapt.audio.audioClip[this.model.get('_audio')._channel].onscreenID = "";
+          Adapt.trigger('audio:playAudio', currentItem.get('_audio').src, this.model.get('_id'), this.model.get('_audio')._channel);
         }
+      }
+    }
 
-    });
+    onProgressClicked(event) {
+      const index = $(event.target).data('index');
+      this.model.setActiveItem(index);
+    }
 
-    return ScenarioAudioView;
+    setupEventListeners() {
+      if (this.model.get('_setCompletionOn') === 'inview') {
+        this.setupInviewCompletion('.component__widget');
+      }
+    }
+
+    // Reduced text
+    replaceText(value) {
+      // If enabled
+      if (this.model.get('_audio') && this.model.get('_audio')._reducedTextisEnabled) {
+        // Change each items title and body
+        for (var i = 0; i < this.model.get('_items').length; i++) {
+          if (value == 0) {
+            this.$('.scenario-audio__content-title-inner').eq(i).html(this.model.get('_items')[i].title);
+            this.$('.scenario-audio__content-body-inner').eq(i).html(this.model.get('_items')[i].body);
+          } else {
+            this.$('.scenario-audio__content-title-inner').eq(i).html(this.model.get('_items')[i].titleReduced);
+            this.$('.scenario-audio__content-body-inner').eq(i).html(this.model.get('_items')[i].bodyReduced);
+          }
+        }
+      }
+    }
+  }
+
+  ScenarioAudioView.template = 'scenario-audio';
+
+  return ScenarioAudioView;
 
 });
