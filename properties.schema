@@ -171,6 +171,8 @@
                 "title": "Audio",
                 "inputType": "Asset:audio",
                 "validators": [],
+                "audioSources": ["_items/#/body"],
+                "audioConditions": [],
                 "help": "Optional audio this item"
               }
             }
