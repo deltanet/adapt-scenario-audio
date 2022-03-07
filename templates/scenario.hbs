@@ -1,8 +1,8 @@
-<div class="scenario-audio__inner component__inner">
+<div class="component__inner scenario-audio__inner">
 
   {{> component this}}
 
-  <div class="scenario-audio__widget component__widget">
+  <div class="component__widget scenario-audio__widget">
 
     {{#unless _textBelowImage}}
     <div class="scenario-audio__content">
@@ -86,7 +86,7 @@
         {{#each _items}}
         <div class="scenario-audio__slider-image-container{{#if _isVisited}} is-visited{{/if}}" style="width: {{../_itemWidth}}%" data-index="{{@index}}">
 
-          <img class="scenario-audio__slider-image" src="{{_graphic.src}}" aria-hidden="true">
+          <img class="scenario-audio__slider-image js-scenario-audio-swipe" src="{{_graphic.src}}" aria-hidden="true">
 
         </div>
 
