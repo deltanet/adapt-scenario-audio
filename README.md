@@ -55,9 +55,9 @@ The attributes listed below are used in *components.json* to configure **Scenari
 On mobile devices, the scenario text is collapsed above the image. It is accessed by clicking an icon (+) next the to strapline.
 
 ----------------------------
-**Version number:**  4.2.1   
-**Framework versions:** 5+  
-**Author / maintainer:** Deltanet  
-**Accessibility support:** WAI AA   
-**RTL support:** yes  
+**Version number:**  5.0.0
+**Framework versions:** 5.20.1+
+**Author / maintainer:** Deltanet
+**Accessibility support:** WAI AA
+**RTL support:** yes
 **Cross-platform coverage:** Chrome, Chrome for Android, Firefox (ESR + latest version), Edge 12, IE 11, Safari iOS 9+10, Safari OS X 12

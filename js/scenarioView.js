@@ -1,4 +1,7 @@
 import Adapt from 'core/js/adapt';
+import a11y from 'core/js/a11y';
+import device from 'core/js/device';
+import notify from 'core/js/notify';
 import ComponentView from 'core/js/views/componentView';
 import MODE from './modeEnum';
 
@@ -61,7 +64,7 @@ class ScenarioView extends ComponentView {
     const $elementToFocus = this.isLargeMode() ?
       this.$(`.scenario-audio__content-item${dataIndexAttr}`) :
       this.$(`.scenario-audio__strapline-btn${dataIndexAttr}`);
-    Adapt.a11y.focusFirst($elementToFocus);
+    a11y.focusFirst($elementToFocus);
   }
 
   onItemsVisitedChange(item, _isVisited) {
@@ -70,7 +73,7 @@ class ScenarioView extends ComponentView {
   }
 
   calculateMode() {
-    const mode = Adapt.device.screenSize === 'large' ? MODE.LARGE : MODE.SMALL;
+    const mode = device.screenSize === 'large' ? MODE.LARGE : MODE.SMALL;
     this.model.set('_mode', mode);
   }
 
@@ -186,17 +189,17 @@ class ScenarioView extends ComponentView {
     this.$('.scenario-audio__progress').removeClass('is-selected').filter(indexSelector).addClass('is-selected');
 
     const $slideGraphics = this.$('.scenario-audio__slider-image-container');
-    Adapt.a11y.toggleAccessibleEnabled($slideGraphics.children('.controls'), false);
-    Adapt.a11y.toggleAccessibleEnabled($slideGraphics.filter(indexSelector).children('.controls'), true);
+    a11y.toggleAccessibleEnabled($slideGraphics.children('.controls'), false);
+    a11y.toggleAccessibleEnabled($slideGraphics.filter(indexSelector).children('.controls'), true);
 
     const $scenarioItems = this.$('.scenario-audio__content-item');
     $scenarioItems.addClass('u-visibility-hidden u-display-none');
-    Adapt.a11y.toggleAccessible($scenarioItems, false);
-    Adapt.a11y.toggleAccessible($scenarioItems.filter(indexSelector).removeClass('u-visibility-hidden u-display-none'), true);
+    a11y.toggleAccessible($scenarioItems, false);
+    a11y.toggleAccessible($scenarioItems.filter(indexSelector).removeClass('u-visibility-hidden u-display-none'), true);
 
     const $scenarioStraplineButtons = this.$('.scenario-audio__strapline-btn');
-    Adapt.a11y.toggleAccessibleEnabled($scenarioStraplineButtons, false);
-    Adapt.a11y.toggleAccessibleEnabled($scenarioStraplineButtons.filter(indexSelector), true);
+    a11y.toggleAccessibleEnabled($scenarioStraplineButtons, false);
+    a11y.toggleAccessibleEnabled($scenarioStraplineButtons.filter(indexSelector), true);
 
     this.evaluateNavigation();
     this.evaluateCompletion();
@@ -264,7 +267,7 @@ class ScenarioView extends ComponentView {
       itemBody = currentItem.get('bodyReduced');
     }
 
-    Adapt.notify.popup({
+    notify.popup({
       title: itemTitle,
       body: itemBody
     });
@@ -289,7 +292,7 @@ class ScenarioView extends ComponentView {
     this.model.setActiveItem(index);
 
     if (!Adapt.audio) return;
-    if (Adapt.device.screenSize === 'large') {
+    if (device.screenSize === 'large') {
       var currentItem = this.model.getActiveItem();
 
       if (this.model.has('_audio') && this.model.get('_audio')._isEnabled && Adapt.audio.audioClip[this.model.get('_audio')._channel].status == 1) {

@@ -1,8 +1,8 @@
-import Adapt from 'core/js/adapt';
+import components from 'core/js/components';
 import ScenarioModel from './scenarioModel';
 import ScenarioView from './scenarioView';
 
-export default Adapt.register('scenario-audio', {
+export default components.register('scenario-audio', {
   model: ScenarioModel,
   view: ScenarioView
 });

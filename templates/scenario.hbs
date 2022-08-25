@@ -52,17 +52,17 @@
           {{#each _items}}
           <button class="scenario-audio__strapline-btn js-scenario-audio-strapline-open-popup{{#if _isVisited}} is-visited{{/if}}" aria-label="{{{strapline}}}" style="width: {{../_itemWidth}}%" data-index="{{@index}}">
 
-            <div class="scenario-audio__strapline-title">
-              <div class="scenario-audio__strapline-title-inner">
+            <span class="scenario-audio__strapline-title">
+              <span class="scenario-audio__strapline-title-inner">
                 {{{strapline}}}
-              </div>
-            </div>
+              </span>
+            </span>
 
-            <div class="btn-icon scenario-audio__strapline-icon">
-              <div class="icon"></div>
-            </div>
+            <span class="btn-icon scenario-audio__strapline-icon">
+              <span class="icon"></span>
+            </span>
 
-            <div class="focus-rect"></div>
+            <span class="focus-rect"></span>
 
           </button>
           {{/each}}
@@ -74,11 +74,11 @@
     <div class="scenario-audio__slide-container">
 
       <button data-direction="left" class="btn-icon scenario-audio__controls scenario-audio__controls-left js-scenario-audio-controls-click" aria-label="{{_globals._accessibility._ariaLabels.previous}}">
-        <div class="icon icon-controls-left"></div>
+        <span class="icon icon-controls-left"></span>
       </button>
 
       <button data-direction="right" class="btn-icon scenario-audio__controls scenario-audio__controls-right js-scenario-audio-controls-click" aria-label="{{_globals._accessibility._ariaLabels.next}}">
-        <div class="icon icon-controls-right"></div>
+        <span class="icon icon-controls-right"></span>
       </button>
 
       <div class="scenario-audio__slider u-clearfix" style="width: {{_totalWidth}}%">
