@@ -6,7 +6,13 @@
     }
   }
 
+  &__widget {
+    display: flex;
+    flex-direction: column;
+  }
+
   &__content {
+    order: 2;
     width: 100%;
     background: @font-color-inverted;
     color: @font-color;
@@ -31,6 +37,7 @@
   // --------------------------------------------------
   &__strapline {
     position: relative;
+    order: 1;
 
     @media (min-width: @device-width-medium) {
       display: none;
@@ -96,6 +103,7 @@
   // Graphic
   // --------------------------------------------------
   &__slide-container {
+    order: 3;
     position: relative;
     width: 100%;
     overflow-x: hidden;
@@ -139,6 +147,7 @@
   // Progress indicators
   // --------------------------------------------------
   &__indicators {
+    order: 4;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;

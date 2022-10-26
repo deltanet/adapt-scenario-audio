@@ -177,10 +177,16 @@ class ScenarioView extends ComponentView {
   setStage(item) {
     const index = item.get('_index');
     const indexSelector = `[data-index="${index}"]`;
+    const textBelowImage  = this.model.get('_textBelowImage');
 
     if (this.isLargeMode()) {
       // Set the visited attribute for large screen devices
       item.toggleVisited(true);
+    }
+
+    if (textBelowImage) {
+      this.$('.scenario-audio__content').css('order', 3);
+      this.$('.scenario-audio__slide-container').css('order', 2);
     }
 
     this.$('.scenario-audio__progress').removeClass('is-selected').filter(indexSelector).addClass('is-selected');

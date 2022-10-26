@@ -4,7 +4,6 @@
 
   <div class="component__widget scenario-audio__widget">
 
-    {{#unless _textBelowImage}}
     <div class="scenario-audio__content">
       <div class="scenario-audio__content-inner">
 
@@ -42,7 +41,6 @@
 
       </div>
     </div>
-    {{/unless}}
 
     <div class="scenario-audio__strapline">
 
@@ -95,44 +93,6 @@
       </div>
 
     </div>
-
-    {{#if _textBelowImage}}
-    <div class="scenario-audio__content">
-      <div class="scenario-audio__content-inner">
-
-        {{#each _items}}
-        <div class="scenario-audio__content-item{{#if _isVisited}} is-visited{{/if}}" data-index="{{@index}}">
-
-          {{#if title}}
-          <div class="scenario-audio__content-title">
-            <div class="scenario-audio__content-title-inner" {{a11y_attrs_heading 'componentItem'}}>
-              {{{title}}}
-            </div>
-          </div>
-          {{/if}}
-
-          {{#if _graphic.alt}}{{{a11y_aria_label _graphic.alt}}}{{/if}}
-
-          <div class="scenario-audio__content-body">
-            <div class="scenario-audio__content-body-inner">
-              {{{compile body}}}
-            </div>
-          </div>
-
-          {{#if instruction}}
-          <div class="scenario-audio__content-instruction">
-            <div class="scenario-audio__content-instruction-inner">
-              {{{compile instruction}}}
-            </div>
-          </div>
-          {{/if}}
-
-        </div>
-        {{/each}}
-
-      </div>
-    </div>
-    {{/if}}
 
     <div class="scenario-audio__indicators scenario-audio__slide-indicators">
 
